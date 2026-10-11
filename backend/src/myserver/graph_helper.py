@@ -1,7 +1,5 @@
 import os
 from typing import Literal
-#################
-# fjrej
 from dotenv import load_dotenv
 from pydantic import BaseModel
 from typing_extensions import TypedDict
@@ -195,9 +193,10 @@ graph.add_edge("generate_query", "test_query")
 graph.add_edge("format_result", END)
 # Other transitions are handled by the Command(goto=...) returns in each node
 
-app = graph.compile()
+myGraph = graph.compile()
 
 
 if __name__ == "__main__":
-    result = app.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
-    print(result.get("answer"))
+    pass
+    # result = app.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
+    #print(result.get("answer"))

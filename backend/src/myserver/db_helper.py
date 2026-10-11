@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from databricks import sql
 
 
-
 load_dotenv()
 
 def get_connection():
