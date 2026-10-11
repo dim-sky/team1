@@ -29,6 +29,450 @@ IT service management and monitoring for a large organisation. The tables descri
 - Rates in `kpi_summary` are fractions from 0 to 1 (0.25 = 25%).
 - Open-backlog ageing and open SLA breaches are snapshot values as of the latest `opened_at` in the data (see `refresh_info`), not the current time.
 
+## Query-writing rules (mandatory for every generated SQL query)
+
+These rules remove ambiguity, so the same question always produces the same SQL and the same answer. They apply both when writing a new query and when fixing a failed one.
+
+### 1. Table names
+Always use fully qualified names: `data2026acc123456.team1.<table>`. Never use an unqualified table name such as `sales` or `fact_incident`.
+
+### 2. Which date defines "when" an incident happened
+- By default, an incident's date (day, weekday/weekend, week, month, quarter, year) is the date it was **opened**: join `fact_incident.opened_date_key = dim_date.date_key`.
+- Use `acknowledged_date_key`, `resolved_date_key` or `closed_date_key` **only** when the question explicitly asks about the date of that milestone (e.g. "how many incidents were resolved in March").
+- A question about how fast incidents are handled at a certain time (e.g. "do teams acknowledge P1 incidents faster on weekends?") is about incidents **opened** at that time, so it uses `opened_date_key`. Using `acknowledged_date_key` here is wrong: incidents opened on a weekend but acknowledged on Monday would move into the weekday group and bias both averages.
+- All timestamps and dates are UTC.
+
+### 3. Filtering on dimensions
+- Filter on business columns, **never** on surrogate key values (`_key` columns are re-assigned at every refresh).
+  - Severity: `dim_severity.severity_code = 'P1'` (not `severity_key = 1`).
+  - Team: `dim_team.team_id` / `team_name`; service: `dim_service.service_id` / `service_name`; asset: `dim_asset.asset_id`.
+- Only use values listed in this catalog (e.g. `day_type` is `'Weekday'` or `'Weekend'`; `support_hours` is `'24x7'`, `'08:00-20:00'`, `'08:00-18:00'` or `'Unknown'`).
+- Exclude `Unknown` rows from comparisons unless the question asks about them.
+- Note the type difference: `fact_incident.is_high_priority` is a 0/1 INT flag, while `dim_severity.is_high_priority` is the text `'Yes'`/`'No'`. When the question is about one severity (e.g. P1), filter on `severity_code` and do not add `is_high_priority`.
+
+### 4. Cancelled incidents
+Every incident KPI query on `fact_incident` must include `is_cancelled = 0`.
+
+### 5. Metrics
+Use exactly the metric definitions listed under `fact_incident` (e.g. MTTA = `AVG(minutes_to_acknowledge)`, MTTR = `AVG(minutes_to_resolve)`, SLA compliance % = `SUM(is_sla_met) / (SUM(is_sla_met) + SUM(is_sla_breached))`). Do not invent alternative formulas.
+
+### 6. Comparisons between groups
+- Return aggregated results, never raw incident rows.
+- When comparing groups (e.g. support models, weekend vs weekday), return per group: the average, the median (`MEDIAN(...)`) and the number of incidents (`COUNT(...)`), so small samples and outliers are visible.
+- Prefer one `GROUP BY` with conditional aggregation (`AVG(CASE WHEN ... THEN ... END)`) over separate CTEs joined together, so that no group silently disappears.
+
+### 7. Joins
+Every `JOIN` must have an explicit `ON` condition using the join paths listed in this catalog. Never join tables without a condition.
+
+### 8. kpi_summary vs fact_incident
+- `kpi_summary` is monthly by opened month. When rolling it up, `SUM` the numerator and denominator columns and divide again; never average the stored rate or mean columns.
+- Questions that need a finer level than month (day, weekday/weekend, hour) must use `fact_incident`.
+
+### 9. Relative dates ("this month", "last 30 days", "recently")
+The data is a static snapshot (roughly January–September 2026), not live. Never use `CURRENT_DATE()` or `NOW()`. Relative periods are measured back from `refresh_info.latest_incident_opened_at`, and the answer must say which date it is relative to.
+
+### 10. Dates outside the loaded window
+`dim_date` covers 2025–2027, but incidents exist only for roughly January–September 2026. A query on another period returns 0 rows; this means "no data loaded", **not** "zero incidents". The answer must say so.
+
+### 11. Percentages and units
+Rates are fractions from 0 to 1. To show a percentage, multiply by 100 and round (`ROUND(100.0 * ..., 1)`). Use `NULLIF(denominator, 0)` to avoid division by zero. Durations are in minutes; convert to hours (`/ 60.0`) only if the question asks for hours.
+
+### 12. Local time vs UTC
+All timestamps are UTC, and `dim_date` days are UTC days. The organisation is in Greece, so questions about time of day ("at night", "during office hours", "what hour") use local time: `from_utc_timestamp(<timestamp>, 'Europe/Athens')`.
+
+### 13. Fixing a failed query
+When a query fails, fix **only** what the error message points to (e.g. a wrong table or column name). Keep the same joins, filters, date logic and aggregations, unless they break one of these rules.
+
+---
+
+## Interpretation examples (questions that are easy to get wrong)
+
+Each example shows a question, the tempting wrong interpretation, the correct interpretation and the reference SQL. Follow these patterns for similar questions.
+
+### Example 1 — Speed on weekends vs weekdays
+
+**Question:** "Do 24x7 teams acknowledge P1 incidents faster on weekends than teams with business-hours support?"
+
+**Wrong:** Joining `dim_date` on `acknowledged_date_key`. Incidents opened on Saturday but acknowledged on Monday move into the weekday group, so slow weekend incidents disappear from the weekend average. Filtering P1 with `severity_key = 1`.
+
+**Correct:** Weekend/weekday is decided by the **opened** date. P1 is `severity_code = 'P1'`. Return average, median and count per group.
+
+```sql
+SELECT
+  t.support_hours,
+  AVG(CASE WHEN d.day_type = 'Weekend' THEN f.minutes_to_acknowledge END)    AS weekend_avg_mtta,
+  MEDIAN(CASE WHEN d.day_type = 'Weekend' THEN f.minutes_to_acknowledge END) AS weekend_median_mtta,
+  COUNT(CASE WHEN d.day_type = 'Weekend' THEN 1 END)                         AS weekend_incidents,
+  AVG(CASE WHEN d.day_type = 'Weekday' THEN f.minutes_to_acknowledge END)    AS weekday_avg_mtta,
+  MEDIAN(CASE WHEN d.day_type = 'Weekday' THEN f.minutes_to_acknowledge END) AS weekday_median_mtta,
+  COUNT(CASE WHEN d.day_type = 'Weekday' THEN 1 END)                         AS weekday_incidents
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_team t     ON f.assigned_team_key = t.team_key
+JOIN data2026acc123456.team1.dim_severity s ON f.severity_key = s.severity_key
+JOIN data2026acc123456.team1.dim_date d     ON f.opened_date_key = d.date_key
+WHERE f.is_cancelled = 0
+  AND s.severity_code = 'P1'
+  AND t.support_hours IN ('24x7', '08:00-20:00', '08:00-18:00')
+GROUP BY t.support_hours
+ORDER BY t.support_hours
+```
+
+### Example 2 — Incidents in a month
+
+**Question:** "How many incidents were there in May?"
+
+**Wrong:** Counting by resolved or closed date; including cancelled incidents; averaging a stored column in `kpi_summary`.
+
+**Correct:** Incidents **opened** in May 2026 (the only loaded year), excluding cancelled ones.
+
+```sql
+SELECT COUNT(*) AS incidents
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_date d ON f.opened_date_key = d.date_key
+WHERE f.is_cancelled = 0
+  AND d.year = 2026
+  AND d.month_number = 5
+```
+
+### Example 3 — The exception: a question about another milestone
+
+**Question:** "How many incidents were resolved in March?"
+
+**Wrong:** Using `opened_date_key` (that answers "how many incidents opened in March are now resolved", a different question).
+
+**Correct:** The question is explicitly about the **resolution** date, so join on `resolved_date_key`. Unresolved incidents have a NULL key and drop out of the inner join.
+
+```sql
+SELECT COUNT(*) AS incidents_resolved
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_date d ON f.resolved_date_key = d.date_key
+WHERE f.is_cancelled = 0
+  AND d.year = 2026
+  AND d.month_number = 3
+```
+
+### Example 4 — Current backlog vs historical backlog
+
+**Question A:** "How many incidents are open?"
+
+**Wrong:** Counting `status = 'Open'` (no such value); presenting the result as "open right now".
+
+**Correct:** `SUM(is_open)`, reported as of the latest `opened_at` in the data, not as of today.
+
+```sql
+SELECT
+  SUM(f.is_open) AS open_backlog,
+  (SELECT latest_incident_opened_at FROM data2026acc123456.team1.refresh_info) AS as_of
+FROM data2026acc123456.team1.fact_incident f
+WHERE f.is_cancelled = 0
+```
+
+**Question B:** "What was the backlog at the end of March?"
+
+**Wrong:** Using `kpi_summary.open_backlog` for March. That column means "incidents opened in March that are **still** open now", not the backlog at the end of March.
+
+**Correct:** Cannot be answered. There is no status history, so the backlog at a past date cannot be reconstructed. Say so.
+
+### Example 5 — SLA compliance
+
+**Question:** "What is the SLA compliance for P1 incidents?"
+
+**Wrong:** `AVG(is_sla_met)`. Open incidents have `is_sla_met = 0`, so they are counted as failures and compliance looks far too low.
+
+**Correct:** Only resolved incidents count: met / (met + breached).
+
+```sql
+SELECT
+  SUM(f.is_sla_met)      AS sla_met,
+  SUM(f.is_sla_breached) AS sla_breached,
+  ROUND(100.0 * SUM(f.is_sla_met)
+        / NULLIF(SUM(f.is_sla_met) + SUM(f.is_sla_breached), 0), 1) AS sla_compliance_pct
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_severity s ON f.severity_key = s.severity_key
+WHERE f.is_cancelled = 0
+  AND s.severity_code = 'P1'
+```
+
+### Example 6 — Breached SLA: resolved late vs open and overdue
+
+**Question A:** "How many incidents breached their SLA?" → resolved incidents that were resolved late: `SUM(is_sla_breached)`.
+
+**Question B:** "How many open incidents are past their SLA?" / "How many incidents are breaching SLA right now?" → open incidents already overdue: `SUM(is_open_sla_breached)`, a snapshot as of the latest `opened_at`.
+
+**Wrong:** Mixing the two, or adding them together without saying so.
+
+**Correct:** When the question is unclear, return both, clearly labelled.
+
+```sql
+SELECT
+  SUM(f.is_sla_breached)      AS resolved_late,
+  SUM(f.is_open_sla_breached) AS open_and_overdue,
+  (SELECT latest_incident_opened_at FROM data2026acc123456.team1.refresh_info) AS as_of
+FROM data2026acc123456.team1.fact_incident f
+WHERE f.is_cancelled = 0
+```
+
+### Example 7 — Share of high-priority incidents
+
+**Question:** "What percentage of incidents are P1 or P2?"
+
+**Wrong:** `dim_severity.is_high_priority = 1` (that column is the text 'Yes'/'No', so the filter matches nothing); returning the fraction 0.18 as "0.18%".
+
+**Correct:** Use the 0/1 flag in `fact_incident` and convert to a percentage.
+
+```sql
+SELECT
+  COUNT(*)                                          AS incidents,
+  SUM(f.is_high_priority)                           AS p1_p2_incidents,
+  ROUND(100.0 * SUM(f.is_high_priority) / COUNT(*), 1) AS p1_p2_pct
+FROM data2026acc123456.team1.fact_incident f
+WHERE f.is_cancelled = 0
+```
+
+### Example 8 — "Critical" has three meanings
+
+**Question A:** "How many critical incidents were there?" → **severity** P1 (`severity_name` is 'P1 - Critical').
+
+**Question B:** "How many incidents affected critical systems?" → **asset criticality** `dim_asset.criticality = 'Critical'`.
+
+**Question C:** "How many critical alerts were raised?" → **monitoring alert level** `fact_monitoring_event.alert_level = 'critical'` and `is_alert = 1`.
+
+**Wrong:** Using one meaning for all three. If the question is genuinely ambiguous, state which meaning was used.
+
+```sql
+-- A: critical incidents (P1)
+SELECT COUNT(*) AS p1_incidents
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_severity s ON f.severity_key = s.severity_key
+WHERE f.is_cancelled = 0
+  AND s.severity_code = 'P1';
+
+-- B: incidents on critical production assets
+SELECT COUNT(*) AS incidents_on_critical_assets
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_asset a ON f.asset_key = a.asset_key
+WHERE f.is_cancelled = 0
+  AND a.criticality = 'Critical'
+  AND a.environment = 'Production';
+
+-- C: critical alerts
+SELECT COUNT(*) AS critical_alerts
+FROM data2026acc123456.team1.fact_monitoring_event e
+WHERE e.is_alert = 1
+  AND e.alert_level = 'critical';
+```
+
+### Example 9 — Assigned team vs owner team
+
+**Question:** "Which team has the worst SLA compliance?"
+
+**Wrong:** Using `dim_asset.owner_team_name`. About 15% of incidents are assigned to a team other than the asset owner, and the team handling the incident is the one responsible for its SLA. Also: ranking teams with only 2–3 resolved incidents.
+
+**Correct:** Use the **assigned** team (`fact_incident.assigned_team_key`). Use the owner team only when the question says "owns" or "owner". Require a minimum number of resolved incidents and show it.
+
+```sql
+SELECT
+  t.team_name,
+  SUM(f.is_sla_met) + SUM(f.is_sla_breached) AS resolved_incidents,
+  ROUND(100.0 * SUM(f.is_sla_met)
+        / NULLIF(SUM(f.is_sla_met) + SUM(f.is_sla_breached), 0), 1) AS sla_compliance_pct
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_team t ON f.assigned_team_key = t.team_key
+WHERE f.is_cancelled = 0
+  AND t.team_id <> 'UNKNOWN'
+GROUP BY t.team_name
+HAVING SUM(f.is_sla_met) + SUM(f.is_sla_breached) >= 20
+ORDER BY sla_compliance_pct ASC
+LIMIT 10
+```
+
+### Example 10 — Rolling up kpi_summary
+
+**Question:** "Show the monthly trend of mean time to resolve."
+
+**Wrong:** `AVG(mean_time_to_resolve_min)`. Every row (month × severity × service × team) would get equal weight, whether it has 1 incident or 100.
+
+**Correct:** Sum the numerator and the denominator, then divide.
+
+```sql
+SELECT
+  d.year_month,
+  ROUND(SUM(k.total_minutes_to_resolve) / NULLIF(SUM(k.resolved_incident_count), 0), 1) AS mttr_minutes,
+  SUM(k.resolved_incident_count) AS resolved_incidents
+FROM data2026acc123456.team1.kpi_summary k
+JOIN data2026acc123456.team1.dim_date d ON k.month_date_key = d.date_key
+GROUP BY d.year_month
+ORDER BY d.year_month
+```
+
+### Example 11 — Relative dates on a static snapshot
+
+**Question:** "How many incidents were opened in the last 30 days?"
+
+**Wrong:** `CURRENT_DATE() - 30`. The data ends around September 2026, so this returns 0 and the answer "0 incidents" is false.
+
+**Correct:** Count back from the latest incident in the data, and say so in the answer.
+
+```sql
+WITH ref AS (
+  SELECT CAST(latest_incident_opened_at AS DATE) AS as_of
+  FROM data2026acc123456.team1.refresh_info
+)
+SELECT
+  COUNT(*)       AS incidents_last_30_days,
+  MAX(ref.as_of) AS as_of_date
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_date d ON f.opened_date_key = d.date_key
+CROSS JOIN ref  -- one-row table, so CROSS JOIN is safe here
+WHERE f.is_cancelled = 0
+  AND d.full_date >  date_sub(ref.as_of, 30)
+  AND d.full_date <= ref.as_of
+```
+
+### Example 12 — Periods outside the loaded data
+
+**Question:** "How many incidents were there in 2025?"
+
+**Wrong:** Running the query, getting 0, and answering "There were no incidents in 2025."
+
+**Correct:** The data covers roughly January–September 2026 only. Answer that 2025 is not in the loaded data. (The `check_answerability` step should reject this question.)
+
+### Example 13 — Time of day
+
+**Question:** "At what time of day are most P1 incidents opened?"
+
+**Wrong:** `HOUR(opened_at)`, which gives UTC hours, 2–3 hours behind Greek time.
+
+**Correct:** Convert to local time first.
+
+```sql
+SELECT
+  HOUR(from_utc_timestamp(f.opened_at, 'Europe/Athens')) AS local_hour,
+  COUNT(*) AS p1_incidents
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_severity s ON f.severity_key = s.severity_key
+WHERE f.is_cancelled = 0
+  AND s.severity_code = 'P1'
+GROUP BY local_hour
+ORDER BY local_hour
+```
+
+### Example 14 — Ordering days and months
+
+**Question:** "Show the number of incidents per month" / "per day of the week."
+
+**Wrong:** `ORDER BY month_name` or `ORDER BY day_name`, which sorts alphabetically (April, August, February…). Assuming `day_of_week_number` 1 = Monday (it is 1 = Sunday).
+
+**Correct:** Group by the name and sort by the number column.
+
+```sql
+SELECT d.month_name, COUNT(*) AS incidents
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_date d ON f.opened_date_key = d.date_key
+WHERE f.is_cancelled = 0
+GROUP BY d.month_number, d.month_name
+ORDER BY d.month_number
+```
+
+### Example 15 — Incidents preceded by alerts (join fan-out)
+
+**Question:** "What share of P1 incidents were preceded by a monitoring alert?"
+
+**Wrong:** Inner-joining `fact_monitoring_event` and using `COUNT(*)`. One incident can have many events, so this counts events, not incidents, and the share can exceed 100%.
+
+**Correct:** Reduce events to one row per incident first, then left-join.
+
+```sql
+WITH alerted AS (
+  SELECT DISTINCT e.incident_key
+  FROM data2026acc123456.team1.fact_monitoring_event e
+  WHERE e.incident_key <> -1
+    AND e.is_alert = 1
+)
+SELECT
+  COUNT(*)                                               AS p1_incidents,
+  COUNT(a.incident_key)                                  AS preceded_by_alert,
+  ROUND(100.0 * COUNT(a.incident_key) / COUNT(*), 1)     AS preceded_by_alert_pct
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_severity s ON f.severity_key = s.severity_key
+LEFT JOIN alerted a ON a.incident_key = f.incident_key
+WHERE f.is_cancelled = 0
+  AND s.severity_code = 'P1'
+```
+
+### Example 16 — Alerts vs events
+
+**Question:** "Which services raise the most alerts?"
+
+**Wrong:** `COUNT(*)` on `fact_monitoring_event`, which counts all readings, including normal ones that are not alerts.
+
+**Correct:** `SUM(is_alert)`; show total events as context.
+
+```sql
+SELECT
+  s.service_name,
+  SUM(e.is_alert) AS alerts,
+  COUNT(*)        AS events
+FROM data2026acc123456.team1.fact_monitoring_event e
+JOIN data2026acc123456.team1.dim_service s ON e.service_key = s.service_key
+WHERE s.service_name <> 'Unknown'
+GROUP BY s.service_name
+ORDER BY alerts DESC
+```
+
+### Example 17 — Affected users
+
+**Question:** "How many users were affected by Corporate Email incidents?"
+
+**Wrong:** Presenting `SUM(affected_users)` as the number of distinct people. The same person can be counted in several incidents, and incidents with an invalid value (NULL) are silently left out.
+
+**Correct:** Report the sum as "user impacts" and show how many incidents had no valid value.
+
+```sql
+SELECT
+  SUM(f.affected_users)                                AS user_impacts,
+  COUNT(*)                                             AS incidents,
+  COUNT(*) - COUNT(f.affected_users)                   AS incidents_without_valid_value
+FROM data2026acc123456.team1.fact_incident f
+JOIN data2026acc123456.team1.dim_service s ON f.service_key = s.service_key
+WHERE f.is_cancelled = 0
+  AND s.service_name = 'Corporate Email'
+```
+
+### Example 18 — Counting rejected records
+
+**Question:** "How many records were rejected by data-quality checks?"
+
+**Wrong:** `COUNT(*)` on `exception_queue`. It has one row per broken rule, so a record that breaks three rules is counted three times. Showing `raw_record` to the user.
+
+**Correct:** Count distinct records per source table. Never select `raw_record`.
+
+```sql
+SELECT
+  source_table,
+  COUNT(DISTINCT record_key) AS rejected_records,
+  COUNT(*)                   AS rule_violations
+FROM data2026acc123456.team1.exception_queue
+GROUP BY source_table
+ORDER BY rejected_records DESC
+```
+
+### Example 19 — Questions that cannot be answered
+
+The `check_answerability` step must reject these (see "Out of scope"). Never write a query that approximates them:
+
+| Question | Why it cannot be answered |
+|---|---|
+| "What was the backlog at the end of March?" | No status history; only the latest status exists. |
+| "Which engineer resolves incidents fastest?" | No individual staff data. |
+| "How much did the ERP outage cost?" | No cost or financial data. |
+| "How many incidents will we have next month?" | No forecasts. |
+| "Why did the Payments API keep failing?" | No root-cause analysis beyond the `root_cause` label (the label itself can be reported). |
+| "How many incidents were there in 2025?" | Outside the loaded window (roughly January–September 2026). |
+| "What is happening on the network right now?" | Static snapshot, not real-time. |
+| "Which incidents were reassigned between teams?" | No reassignment history. |
+| "Did we meet the SLA in business hours?" | SLA is measured in calendar time only. |
+
 ---
 
 ## data2026acc123456.team1.dim_date
