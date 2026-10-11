@@ -32,7 +32,9 @@ MAX_ROWS = 500           # max rows fetched into memory / sent to the LLM
 DEBUG_SQL: str | None = None
 
 llm = AzureChatOpenAI(
-    model=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+    api_version=os.getenv("OPENAI_API_VERSION"),
     temperature=0,
     max_tokens=1000,
 )
