@@ -45,6 +45,9 @@ def temp(reqBody: AskQuestion):
     res = myGraph.invoke({"question": reqBody.question, "retries": 0})
     print(res)
     return res
+
+
+
     
 
 
