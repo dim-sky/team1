@@ -151,7 +151,7 @@ is_error = false όταν:
 Αν is_error = false, άφησε το reason κενό.
 """
 
-FIX_SQL_PROMPT = """
+FIX_SQL_PROMPT = f"""
 ---
 ΔΙΟΡΘΩΣΗ SQL
 
@@ -183,4 +183,6 @@ FIX_SQL_PROMPT = """
   year = 2026, σωστή τιμή για day_type).
 - Το αποτέλεσμα δεν απαντά στην ερώτηση: πρόσθεσε το GROUP BY ή τη μετρική που λείπει
   ώστε να φαίνεται η σύγκριση που ζητήθηκε.
+  
+{SQL_SYSTEM_PROMPT}
 """
