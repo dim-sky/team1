@@ -1,80 +1,111 @@
 <div class="chat-page">
-  <div class="messages" #messageList>
-    <div class="messages-inner">
-      @if (messages().length === 0) {
-        <div class="empty-state">
-          <h2>How can I help you today?</h2>
-          <p>Type a message below to start the conversation.</p>
-        </div>
+  <!-- Έτοιμες ερωτήσεις (αριστερά) -->
+  <aside class="suggestions">
+    <h3 class="suggestions-title">Suggested Questions</h3>
+    <ul>
+      @for (q of suggestions; track q) {
+        <li>
+          <button
+            type="button"
+            class="suggestion-btn"
+            [disabled]="isTyping()"
+            (click)="askSuggestion(q)"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path
+                d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>{{ q }}</span>
+          </button>
+        </li>
       }
+    </ul>
+  </aside>
 
-      @for (msg of messages(); track msg.id) {
-        <div class="message-row" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'bot'">
-          <div class="bubble">{{ msg.text }}</div>
-        </div>
-      }
-
-      @if (isTyping()) {
-        <div class="message-row bot">
-          <div class="bubble typing">
-            <span></span><span></span><span></span>
+  <!-- Κύριο chat -->
+  <div class="chat-main">
+    <div class="messages" #messageList>
+      <div class="messages-inner">
+        @if (messages().length === 0) {
+          <div class="empty-state">
+            <h2>How can I help you today?</h2>
+            <p>Type a message below or pick a suggested question.</p>
           </div>
-        </div>
-      }
-    </div>
-  </div>
+        }
 
-  <div class="composer">
-    <div class="composer-top">
-      <div
-        class="mode-switch"
-        role="radiogroup"
-        aria-label="Τύπος ερώτησης"
-        [class.general]="mode() === 'general'"
-      >
-        <span class="thumb"></span>
-        <button
-          type="button"
-          role="radio"
-          [attr.aria-checked]="mode() === 'project'"
-          [class.active]="mode() === 'project'"
-          (click)="setMode('project')"
-        >
-          Project
-        </button>
-        <button
-          type="button"
-          role="radio"
-          [attr.aria-checked]="mode() === 'general'"
-          [class.active]="mode() === 'general'"
-          (click)="setMode('general')"
-        >
-          General
-        </button>
+        @for (msg of messages(); track msg.id) {
+          <div class="message-row" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'bot'">
+            <div class="bubble">{{ msg.text }}</div>
+          </div>
+        }
+
+        @if (isTyping()) {
+          <div class="message-row bot">
+            <div class="bubble typing">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        }
       </div>
     </div>
 
-    <div class="composer-box">
-      <textarea
-        #input
-        rows="1"
-        placeholder="Type a message..."
-        [value]="draft()"
-        (input)="onInput($event)"
-        (keydown)="onKeydown($event)"
-      ></textarea>
-      <button
-        type="button"
-        class="send-btn"
-        aria-label="Send message"
-        [disabled]="!draft().trim() || isTyping()"
-        (click)="send()"
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-          <path d="M3 20l18-8L3 4v6l12 2-12 2z" fill="currentColor" />
-        </svg>
-      </button>
+    <div class="composer">
+      <div class="composer-top">
+        <div
+          class="mode-switch"
+          role="radiogroup"
+          aria-label="Τύπος ερώτησης"
+          [class.general]="mode() === 'general'"
+        >
+          <span class="thumb"></span>
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="mode() === 'project'"
+            [class.active]="mode() === 'project'"
+            (click)="setMode('project')"
+          >
+            Project
+          </button>
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="mode() === 'general'"
+            [class.active]="mode() === 'general'"
+            (click)="setMode('general')"
+          >
+            General
+          </button>
+        </div>
+      </div>
+
+      <div class="composer-box">
+        <textarea
+          #input
+          rows="1"
+          placeholder="Type a message..."
+          [value]="draft()"
+          (input)="onInput($event)"
+          (keydown)="onKeydown($event)"
+        ></textarea>
+        <button
+          type="button"
+          class="send-btn"
+          aria-label="Send message"
+          [disabled]="!draft().trim() || isTyping()"
+          (click)="send()"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M3 20l18-8L3 4v6l12 2-12 2z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+      <p class="hint">Enter to send · Shift + Enter for a new line</p>
     </div>
-    <p class="hint">Enter to send · Shift + Enter for a new line</p>
   </div>
 </div>

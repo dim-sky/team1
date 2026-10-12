@@ -27,6 +27,15 @@ export class HomePage {
   isTyping = signal(false);
   mode = signal<ChatMode>('project');
 
+  // Έτοιμες ερωτήσεις: άλλαξε το κείμενο εδώ
+  suggestions: string[] = [
+    'How many incidents were opened in May 2026?',
+    'What was the mean time to acknowledge incidents in June 2026, in minutes?',
+    'What was the SLA compliance rate per severity level for each month of Q2 2026',
+    'Which three business services had the longest mean time to resolve for P1 and P2 incidents, and which team handled most of those incidents?',
+    'For incidents on Critical production assets, how many were preceded by a monitoring alert, and which metric triggered those alerts most often?',
+  ];
+
   private nextId = 1;
 
   setMode(mode: ChatMode): void {
@@ -48,12 +57,10 @@ export class HomePage {
     }
   }
 
+  // Αποστολή από το πλαίσιο κειμένου
   send(): void {
     const text = this.draft().trim();
     if (!text || this.isTyping()) return;
-
-    // Show the user's message right away
-    this.addMessage('user', text);
 
     // Clear the textbox
     this.draft.set('');
@@ -62,6 +69,19 @@ export class HomePage {
       this.autoResize(this.input.nativeElement);
       this.input.nativeElement.focus();
     }
+
+    this.sendText(text);
+  }
+
+  // Αποστολή από μια έτοιμη ερώτηση
+  askSuggestion(question: string): void {
+    if (this.isTyping()) return;
+    this.sendText(question);
+  }
+
+  private sendText(text: string): void {
+    // Show the user's message right away
+    this.addMessage('user', text);
 
     // Show the typing indicator while waiting for the server
     this.isTyping.set(true);

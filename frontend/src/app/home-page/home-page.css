@@ -12,10 +12,111 @@
 
 .chat-page {
   display: flex;
-  flex-direction: column;
   height: calc(100vh - 64px); /* full screen minus the navbar */
   background: var(--page-bg);
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.chat-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Suggested questions (left sidebar) ---------- */
+.suggestions {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 1.5rem 1rem;
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.suggestions-title {
+  margin: 0 0 1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.suggestions ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.suggestion-btn {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--bot-text);
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.suggestion-btn svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+.suggestion-btn:hover:not(:disabled) {
+  background: var(--page-bg);
+  border-color: var(--border);
+}
+
+.suggestion-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Σε κινητό: οι ερωτήσεις γίνονται οριζόντια λωρίδα στην κορυφή */
+@media (max-width: 800px) {
+  .chat-page {
+    flex-direction: column;
+  }
+
+  .suggestions {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .suggestions-title {
+    display: none;
+  }
+
+  .suggestions ul {
+    flex-direction: row;
+  }
+
+  .suggestion-btn {
+    width: auto;
+    white-space: nowrap;
+    border-color: var(--border);
+    border-radius: 999px;
+    padding: 0.45rem 0.85rem;
+  }
 }
 
 /* ---------- Messages area ---------- */
