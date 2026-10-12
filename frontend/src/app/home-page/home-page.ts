@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HttpHelper } from '../http-helper';
 
 interface ChatMessage {
@@ -6,6 +7,8 @@ interface ChatMessage {
   sender: 'user' | 'bot';
   text: string;
 }
+
+type ChatMode = 'project' | 'general';
 
 @Component({
   selector: 'app-home-page',
@@ -22,8 +25,14 @@ export class HomePage {
   messages = signal<ChatMessage[]>([]);
   draft = signal('');
   isTyping = signal(false);
+  mode = signal<ChatMode>('project');
 
   private nextId = 1;
+
+  setMode(mode: ChatMode): void {
+    this.mode.set(mode);
+    this.input?.nativeElement.focus();
+  }
 
   onInput(event: Event): void {
     const el = event.target as HTMLTextAreaElement;
@@ -63,7 +72,13 @@ export class HomePage {
       role: 'role',
     };
 
-    this.myHttp.postSendMessage(body).subscribe({
+    // Project -> /prompt, General -> /generalprompt
+    const request$: Observable<any> =
+      this.mode() === 'project'
+        ? this.myHttp.postSendMessage(body)
+        : this.myHttp.postSendMessageGeneral(body);
+
+    request$.subscribe({
       next: (res: any) => {
         this.isTyping.set(false);
         this.addMessage('bot', res['answer']);

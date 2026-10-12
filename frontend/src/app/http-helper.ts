@@ -20,5 +20,10 @@ export class HttpHelper {
     }
 
 
+    postSendMessageGeneral(body: any) {
+        return this.myHttp.post(`${this.baseURL}/prompt`, body);
+    }
+
+
 
 }

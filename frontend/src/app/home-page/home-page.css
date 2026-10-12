@@ -172,6 +172,63 @@ textarea {
   margin: 0.5rem 0 0;
 }
 
+/* ---------- Project / General switch ---------- */
+.composer-top {
+  max-width: 800px;
+  margin: 0 auto 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mode-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  background: #e4e7eb;
+  border-radius: 999px;
+}
+
+.mode-switch .thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  background: var(--user-bubble);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(31, 41, 51, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.mode-switch.general .thumb {
+  transform: translateX(100%);
+}
+
+.mode-switch button {
+  position: relative;
+  z-index: 1;
+  min-width: 78px;
+  padding: 0.35rem 0.9rem;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: color 0.2s ease;
+}
+
+.mode-switch button:hover:not(.active) {
+  color: var(--bot-text);
+}
+
+.mode-switch button.active {
+  color: #ffffff;
+}
+
 /* ---------- Animations ---------- */
 @keyframes pop-in {
   from { opacity: 0; transform: translateY(6px); }

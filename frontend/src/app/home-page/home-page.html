@@ -25,6 +25,35 @@
   </div>
 
   <div class="composer">
+    <div class="composer-top">
+      <div
+        class="mode-switch"
+        role="radiogroup"
+        aria-label="Τύπος ερώτησης"
+        [class.general]="mode() === 'general'"
+      >
+        <span class="thumb"></span>
+        <button
+          type="button"
+          role="radio"
+          [attr.aria-checked]="mode() === 'project'"
+          [class.active]="mode() === 'project'"
+          (click)="setMode('project')"
+        >
+          Project
+        </button>
+        <button
+          type="button"
+          role="radio"
+          [attr.aria-checked]="mode() === 'general'"
+          [class.active]="mode() === 'general'"
+          (click)="setMode('general')"
+        >
+          General
+        </button>
+      </div>
+    </div>
+
     <div class="composer-box">
       <textarea
         #input
