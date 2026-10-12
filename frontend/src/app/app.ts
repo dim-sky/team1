@@ -2,10 +2,12 @@ import { Component, signal, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { Navbar } from './navbar/navbar';
+import { LoginPage } from './login-page/login-page';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar],
+  imports: [RouterOutlet, Navbar, LoginPage],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

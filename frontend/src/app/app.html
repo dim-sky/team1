@@ -1,7 +1,6 @@
-<app-navbar [userName]="name()" />
-
-@if (name()) {
-  <router-outlet />
-} @else {
-  <button (click)="login()">Σύνδεση με Microsoft</button>
-}
+   @if (name()) {
+     <app-navbar [userName]="name()" />
+     <router-outlet />
+   } @else {
+     <app-login-page />
+   }

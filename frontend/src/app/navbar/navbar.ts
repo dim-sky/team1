@@ -18,7 +18,7 @@ export class Navbar {
   menuOpen = false;
 
   links = [
-    { label: 'Chat', path: '/chat' },
+    { label: 'Chat', path: '/home' },
     { label: 'About', path: '/about' },
     { label: 'Contact us', path: '/contact' },
   ];
