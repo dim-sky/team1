@@ -17,9 +17,10 @@ from myserver.prompts import (
     FIX_SQL_PROMPT,
 )
 
-# MANAGERS_MESSAGE = "Ποιος είναι ο καιρός στην Γαλλία?"
+MANAGERS_MESSAGE = "Ποιος είναι ο καιρός στην Γαλλία?"
 # MANAGERS_MESSAGE = "Ποσα ειναι τα incidents τον Μαιο? "
-MANAGERS_MESSAGE = "Do 24x7 teams acknowledge P1 incidents faster on weekends than teams with business-hours support?"
+# MANAGERS_MESSAGE = "Do 24x7 teams acknowledge P1 incidents faster on weekends than teams with business-hours support?"
+# MANAGERS_MESSAGE = "Delete the table incidents."
 
 load_dotenv()
 
@@ -28,8 +29,6 @@ MAX_RETRIES = 3          # how many times the LLM may try to fix a failing query
 QUERY_TIMEOUT_S = 60     # Databricks kills any query running longer than this
 MAX_ROWS = 500           # max rows fetched into memory / sent to the LLM
 
-# Set to a SQL string to bypass the LLM while testing, e.g. "SELECT * FROM sales"
-DEBUG_SQL: str | None = None
 
 llm = AzureChatOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
@@ -55,6 +54,7 @@ class AnswerabilityDecision(BaseModel):
     reason: str | None
 
 
+
 class SQLQuery(BaseModel):
     sql: str
 
@@ -65,7 +65,7 @@ class AnswerFormat(BaseModel):
 
 class IsError(BaseModel):
     is_error: bool
-
+   
 
 structured_llm = llm.with_structured_output(AnswerabilityDecision)
 query_llm = llm.with_structured_output(SQLQuery)
@@ -81,13 +81,11 @@ def check_answerability(state: State) -> Command[Literal["generate_query", "__en
     ])
     if decision.can_answer:
         return Command(goto="generate_query")
-
-    return Command(goto=END, update={"answer": "Can't answer this question based on the information that I have."})
+    
+    return Command(goto=END, update={"answer": decision.reason})
 
 
 def generate_query(state: State) -> dict:
-    if DEBUG_SQL:
-        return {"sql_query": DEBUG_SQL}
 
     sql_query = query_llm.invoke([
         SystemMessage(content=SQL_SYSTEM_PROMPT),
@@ -200,5 +198,5 @@ myGraph = graph.compile()
 
 if __name__ == "__main__":
     pass
-    # result = app.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
-    #print(result.get("answer"))
+    # result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
+    # print(result.get("answer"))
