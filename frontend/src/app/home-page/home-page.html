@@ -1,0 +1,51 @@
+<div class="chat-page">
+  <div class="messages" #messageList>
+    <div class="messages-inner">
+      @if (messages().length === 0) {
+        <div class="empty-state">
+          <h2>How can I help you today?</h2>
+          <p>Type a message below to start the conversation.</p>
+        </div>
+      }
+
+      @for (msg of messages(); track msg.id) {
+        <div class="message-row" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'bot'">
+          <div class="bubble">{{ msg.text }}</div>
+        </div>
+      }
+
+      @if (isTyping()) {
+        <div class="message-row bot">
+          <div class="bubble typing">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="composer">
+    <div class="composer-box">
+      <textarea
+        #input
+        rows="1"
+        placeholder="Type a message..."
+        [value]="draft()"
+        (input)="onInput($event)"
+        (keydown)="onKeydown($event)"
+      ></textarea>
+      <button
+        type="button"
+        class="send-btn"
+        aria-label="Send message"
+        [disabled]="!draft().trim() || isTyping()"
+        (click)="send()"
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M3 20l18-8L3 4v6l12 2-12 2z" fill="currentColor" />
+        </svg>
+      </button>
+    </div>
+    <p class="hint">Enter to send · Shift + Enter for a new line</p>
+  </div>
+</div>
