@@ -53,7 +53,13 @@ def health():
 def temp(reqBody: AskQuestion):
     res = myGraph.invoke({"question": reqBody.question, "retries": 0})
     print(res)
-    return res
+    return {"answer": res['answer']}
+
+
+@server.post("/generalMessage")
+def temp(reqBody: AskQuestion):
+    return {"answer": "Pending Implementation"}
+
 
 
 
