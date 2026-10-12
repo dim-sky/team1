@@ -1,7 +1,7 @@
+<app-navbar [userName]="name()" />
+
 @if (name()) {
-  <p>Καλώς ήρθες, {{ name() }}</p>
-  <button (click)="logout()">Αποσύνδεση</button>
+  <router-outlet />
 } @else {
   <button (click)="login()">Σύνδεση με Microsoft</button>
 }
-<router-outlet />
