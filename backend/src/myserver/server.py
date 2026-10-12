@@ -13,6 +13,7 @@ from fastapi import FastAPI, HTTPException
 from .db_helper import get_connection
 from pydantic import BaseModel
 from .graph_helper import myGraph
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -31,6 +32,14 @@ class AskQuestion(BaseModel):
 
 server = FastAPI(title='Databricks Query API')
 
+
+server.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
