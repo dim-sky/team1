@@ -2,7 +2,7 @@ name: Hello World
 
 on:
   push:
-  workflow_dispatch:   # σου δίνει κουμπί "Run workflow" για χειροκίνητη εκτέλεση
+  workflow_dispatch:
 
 jobs:
   hello:
