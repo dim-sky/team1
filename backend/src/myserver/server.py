@@ -9,9 +9,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from .graph_helper import myGraph
-from .deep_agent import ask_deep_agent
-from .llm_helpers import route_question, answer_general
+from myserver.graph_helper import myGraph
+from myserver.deep_agent import ask_deep_agent
+from myserver.llm_helpers import route_question, answer_general
 
 load_dotenv()
 

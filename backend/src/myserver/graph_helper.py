@@ -17,8 +17,8 @@ from myserver.prompts import (
     FIX_SQL_PROMPT,
 )
 
-MANAGERS_MESSAGE = "Ποιος είναι ο καιρός στην Γαλλία?"
-# MANAGERS_MESSAGE = "Ποσα ειναι τα incidents τον Μαιο? "
+# MANAGERS_MESSAGE = "Ποιος είναι ο καιρός στην Γαλλία?"
+MANAGERS_MESSAGE = "Ποσα ειναι τα incidents τον Μαιο? "
 # MANAGERS_MESSAGE = "Do 24x7 teams acknowledge P1 incidents faster on weekends than teams with business-hours support?"
 # MANAGERS_MESSAGE = "Delete the table incidents."
 
@@ -198,5 +198,5 @@ myGraph = graph.compile()
 
 if __name__ == "__main__":
     pass
-    # result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
-    # print(result.get("answer"))
+    result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
+    print(result.get("answer"))
