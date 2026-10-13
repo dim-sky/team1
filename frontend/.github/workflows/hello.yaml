@@ -8,4 +8,4 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Γεια σου κόσμε! Branch: ${{ github.ref_name }}"
+      - run: echo "Hello From Frontend"
