@@ -197,15 +197,7 @@ myGraph = graph.compile()
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     pass
-    result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
-    print(result.get("answer"))
-=======
-     pass
-    #  result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
-    #  print(result.get("answer"))
-
-
-     
->>>>>>> 2848945 (Update deep agent and backend)
+    # result = myGraph.invoke({"question": MANAGERS_MESSAGE, "retries": 0})
+    # print(result.get("answer"))
+    
