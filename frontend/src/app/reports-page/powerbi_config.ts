@@ -32,6 +32,6 @@ export const POWER_BI_REPORTS: PowerBiReport[] = [
     title: 'Αναφορές',              // <-- άλλαξε τον τίτλο αν θέλεις
     description: 'Πίνακας ελέγχου', // <-- άλλαξε την περιγραφή αν θέλεις
     embedUrl:
-      'https://app.powerbi.com/view?r=eyJrIjoiYTBjYzI5OTAtOThkZS00Mzg4LWI2ZGItNDA1MzE5NTJhMzc1IiwidCI6IjY1ZmM4NGMyLWJlZGItNDhmNi05OWQyLTZmODMzY2UxMGRjYSJ9',
+      'https://app.powerbi.com/view?r=eyJrIjoiZWY0NWE4YTgtODFkYy00MjUwLTk2MmItY2MwNzdjNmQ2NDZlIiwidCI6IjY1ZmM4NGMyLWJlZGItNDhmNi05OWQyLTZmODMzY2UxMGRjYSJ9',
   },
 ];
