@@ -15,14 +15,14 @@ const TENANT_ID = 'b1732512-60e5-48fb-92e8-8d6902ac1349';
 const SPA_CLIENT_ID = '37815f98-bbed-4937-95a3-d0ca7960c989';
 const LOGIN_SCOPES = ['User.Read'];
 // Όταν φτιάξεις backend: const API_SCOPE = 'api://<api-client-id>/access_as_user';
-// const API_SCOPE = 'api://<api-client-id>/access_as_user';  /// Να το βάλω μετά με το backend
 
 const msalInstance = new PublicClientApplication({
   auth: {
     clientId: SPA_CLIENT_ID,
     authority: `https://login.microsoftonline.com/${TENANT_ID}`,
+    // Πρέπει να είναι καταχωρημένο ΑΚΡΙΒΩΣ έτσι στο Entra, κάτω από "Single-page application"
     redirectUri: window.location.origin,
-    // redirectUri: 'http://localhost:4200',
+    postLogoutRedirectUri: window.location.origin,
   },
   cache: { cacheLocation: BrowserCacheLocation.LocalStorage },
 });
@@ -40,15 +40,15 @@ export const appConfig: ApplicationConfig = {
     { provide: MSAL_INSTANCE, useValue: msalInstance },
     {
       provide: MSAL_GUARD_CONFIG,
-      useValue: { interactionType: InteractionType.Redirect, authRequest: { scopes: [LOGIN_SCOPES] } },
-      // Να γίνει API_SCOPE μετά???
+      // Διόρθωση: LOGIN_SCOPES είναι ήδη array, όχι [LOGIN_SCOPES]
+      useValue: { interactionType: InteractionType.Redirect, authRequest: { scopes: LOGIN_SCOPES } },
     },
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useValue: {
         interactionType: InteractionType.Redirect,
-        protectedResourceMap: new Map([[baseURL, [LOGIN_SCOPES]]]),
-        // Να γίνει API_SCOPE μετά???
+        // Διόρθωση: LOGIN_SCOPES, όχι [LOGIN_SCOPES]. Αργότερα: [API_SCOPE]
+        protectedResourceMap: new Map([[baseURL, LOGIN_SCOPES]]),
       },
     },
 

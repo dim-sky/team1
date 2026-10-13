@@ -1,6 +1,16 @@
-   @if (name()) {
-     <app-navbar [userName]="name()" />
-     <router-outlet />
-   } @else {
-     <app-login-page />
-   }
+@switch (authState()) {
+  @case ('loading') {
+    <div class="auth-splash" role="status" aria-live="polite">
+      <img class="splash-logo" src="/skillakia-emblem.png" alt="" width="64" height="64" />
+      <span class="splash-spinner" aria-hidden="true"></span>
+      <p>Loading</p>
+    </div>
+  }
+  @case ('signedIn') {
+    <app-navbar [userName]="name()" />
+    <router-outlet />
+  }
+  @case ('signedOut') {
+    <app-login-page />
+  }
+}
