@@ -1,5 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { baseURL } from './strings/endpoints';
 
 @Service()
 export class HttpHelper {
@@ -8,7 +9,7 @@ export class HttpHelper {
     private myHttp = inject(HttpClient)
 
 
-    private baseURL = "http://localhost:8001"
+    private baseURL = baseURL
 
 
 

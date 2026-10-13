@@ -7,6 +7,8 @@ import {
   MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor
 } from '@azure/msal-angular';
 
+import { baseURL } from './strings/endpoints';
+
 import { routes } from './app.routes';
 
 const TENANT_ID = 'b1732512-60e5-48fb-92e8-8d6902ac1349';
@@ -45,7 +47,7 @@ export const appConfig: ApplicationConfig = {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useValue: {
         interactionType: InteractionType.Redirect,
-        protectedResourceMap: new Map([['http://localhost:8001/', [LOGIN_SCOPES]]]),
+        protectedResourceMap: new Map([[baseURL, [LOGIN_SCOPES]]]),
         // Να γίνει API_SCOPE μετά???
       },
     },
