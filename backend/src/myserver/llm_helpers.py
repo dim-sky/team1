@@ -25,41 +25,41 @@ llm = AzureChatOpenAI(
 # --- Router ---------------------------------------------------------------------
 class RouteDecision(BaseModel):
     route: Literal["graph", "agent"] = Field(
-        description="graph = μία ερώτηση ή άσχετο μήνυμα, agent = δύο ή περισσότερες ερωτήσεις δεδομένων"
+        description="graph = one question or irrelevant message, agent = two or more data questions"
     )
-    question_count: int = Field(description="Πόσες ξεχωριστές ερωτήσεις δεδομένων περιέχει")
+    question_count: int = Field(description="How many separate data questions it contains")
     reason: str
 
 
-ROUTER_PROMPT = """Είσαι router. Διαβάζεις το μήνυμα ενός χρήστη προς ένα σύστημα
-που απαντά ερωτήσεις πάνω σε δεδομένα incidents (πλήθη, SLA, MTTA/MTTR, backlog,
-υπηρεσίες, ομάδες, severity κ.λπ.).
+ROUTER_PROMPT = """You are a router. You read a user's message to a system
+that answers questions about incident data (counts, SLA, MTTA/MTTR, backlog,
+services, teams, severity, etc.).
 
-Μέτρα πόσες ΞΕΧΩΡΙΣΤΕΣ ερωτήσεις δεδομένων περιέχει το μήνυμα, δηλαδή πόσα
-διαφορετικά ερωτήματα στη βάση θα χρειαζόταν να τρέξουν.
+Count how many SEPARATE data questions the message contains, i.e. how many
+different queries would need to run on the database.
 
-route = "agent" όταν:
-- υπάρχουν 2 ή περισσότερες ξεχωριστές ερωτήσεις δεδομένων
-  π.χ. "Πόσα incidents είχαμε τον Μάιο και ποια ομάδα έχει το χειρότερο MTTR;"
-- η ερώτηση είναι μία αλλά ζητά ανάλυση σε πολλά βήματα
-  π.χ. "Γιατί έπεσε το SLA compliance τον Ιούνιο;"
+route = "agent" when:
+- there are 2 or more separate data questions
+  e.g. "How many incidents did we have in May and which team has the worst MTTR?"
+- the question is a single one but requires multi-step analysis
+  e.g. "Why did SLA compliance drop in June?"
 
-route = "graph" όταν:
-- υπάρχει ΜΙΑ ερώτηση δεδομένων, ακόμη κι αν έχει πολλά φίλτρα ή group by
-  π.χ. "Πόσα P1 incidents ανά ομάδα και ανά μήνα το 2026;" (ένα ερώτημα)
-- το μήνυμα είναι άσχετο με τα δεδομένα ή αίτημα τροποποίησης δεδομένων
-  (το graph ξέρει να το απορρίψει)
+route = "graph" when:
+- there is ONE data question, even if it has many filters or group bys
+  e.g. "How many P1 incidents per team and per month in 2026?" (one query)
+- the message is irrelevant to the data or a request to modify data
+  (the graph knows how to reject it)
 
-Μια ερώτηση με "και" ΔΕΝ είναι απαραίτητα δύο ερωτήσεις: "MTTA και MTTR ανά
-υπηρεσία" είναι ένα ερώτημα. Δύο ερωτήσεις είναι όταν χρειάζονται διαφορετικά
-ερωτήματα (διαφορετική περίοδος, διαφορετικό θέμα, διαφορετική ομαδοποίηση).
+A question with "and" is NOT necessarily two questions: "MTTA and MTTR per
+service" is one query. There are two questions when different queries are
+needed (different period, different topic, different grouping).
 """
 
 router_llm = llm.with_structured_output(RouteDecision)
 
 
 def route_question(question: str) -> RouteDecision:
-    """Αποφασίζει πού πάει το μήνυμα. Σε σφάλμα, πέφτει στο graph."""
+    """Decides where the message goes. On error, falls back to the graph."""
     try:
         return router_llm.invoke([
             SystemMessage(content=ROUTER_PROMPT),
@@ -71,15 +71,15 @@ def route_question(question: str) -> RouteDecision:
 
 
 # --- General chat ---------------------------------------------------------------
-GENERAL_PROMPT = """Είσαι φιλικός και σύντομος βοηθός.
-Απαντάς σε γενικές ερωτήσεις στη γλώσσα του χρήστη (Ελληνικά ή Αγγλικά).
+GENERAL_PROMPT = """You are a friendly and concise assistant.
+You answer general questions in the user's language (Greek or English).
 
-- ΔΕΝ έχεις πρόσβαση σε δεδομένα της εταιρείας (incidents, SLA, ομάδες κ.λπ.).
-  Αν σε ρωτήσουν κάτι τέτοιο, μην επινοήσεις νούμερα: πες ότι για ερωτήσεις
-  πάνω στα δεδομένα πρέπει να χρησιμοποιήσουν το chat δεδομένων.
-- Δεν έχεις πρόσβαση σε real-time πληροφορίες (καιρός, ειδήσεις, τιμές).
-  Αν σε ρωτήσουν, πες το και μην μαντέψεις.
-- Κράτα τις απαντήσεις σύντομες, εκτός αν ζητηθεί λεπτομέρεια.
+- You do NOT have access to company data (incidents, SLA, teams, etc.).
+  If you are asked something like that, do not make up numbers: say that for questions
+  about the data they should use the data chat.
+- You do not have access to real-time information (weather, news, prices).
+  If you are asked, say so and do not guess.
+- Keep answers short, unless detail is requested.
 """
 
 

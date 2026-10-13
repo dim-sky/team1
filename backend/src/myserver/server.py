@@ -50,7 +50,7 @@ def health():
 
 @server.post("/post", response_model=AnswerResponse)
 def ask_data(reqBody: AskQuestion):
-    """Ερωτήσεις δεδομένων: ο router αποφασίζει graph (1 ερώτηση) ή agent (πολλές)."""
+    """Data questions: the router decides graph (1 question) or agent (multiple)."""
     decision = route_question(reqBody.question)
     print(f"[/post] route={decision.route} count={decision.question_count} reason={decision.reason}")
 
@@ -71,12 +71,12 @@ def ask_data(reqBody: AskQuestion):
 
 @server.post("/generalMessage", response_model=AnswerResponse)
 def ask_general(reqBody: AskQuestion):
-    """Γενικές ερωτήσεις: απλό LLM, χωρίς πρόσβαση στα δεδομένα."""
+    """General questions: plain LLM, without access to the data."""
     try:
         answer = answer_general(reqBody.question)
     except Exception as e:
         print(f"[/generalMessage] failed: {e}")
-        raise HTTPException(status_code=500, detail="Το μήνυμα δεν μπόρεσε να απαντηθεί.")
+        raise HTTPException(status_code=500, detail="The message could not be answered.")
     return {"answer": answer, "route": "general"}
 
 
