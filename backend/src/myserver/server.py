@@ -33,7 +33,10 @@ server = FastAPI(title="Databricks Query API")
 
 server.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[
+        "http://localhost:4200",  # ng serve (development)
+        "http://localhost",       # nginx in Docker
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
