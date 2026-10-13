@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useValue: {
         interactionType: InteractionType.Redirect,
-        protectedResourceMap: new Map([['http://localhost:8000/', [LOGIN_SCOPES]]]),
+        protectedResourceMap: new Map([['http://localhost:8001/', [LOGIN_SCOPES]]]),
         // Να γίνει API_SCOPE μετά???
       },
     },
