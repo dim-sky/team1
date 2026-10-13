@@ -9,12 +9,15 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "databricks-sql-connector>=4.6.0",
+    "deepagents>=0.7.24",
     "fastapi>=0.143.0",
+    "langchain>=1.4.5",
     "langchain-openai>=1.7.0",
     "langgraph>=1.2.14",
     "pydantic>=2.14.0",
     "python-dotenv>=1.2.4",
     "requests>=2.34.2",
+    "sqlglot>=30.22.0",
     "uvicorn>=0.54.0",
 ]
 
