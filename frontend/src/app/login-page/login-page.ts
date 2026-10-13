@@ -10,7 +10,8 @@ import { MsalService } from '@azure/msal-angular';
 export class LoginPage {
   private msal = inject(MsalService);
 
-  brand = 'Team1';
+  // Ίδιο όνομα με το navbar (το λογότυπο δεν έχει πια όνομα μέσα)
+  brand = 'Skillakia';
   isRedirecting = signal(false);
 
   login(): void {

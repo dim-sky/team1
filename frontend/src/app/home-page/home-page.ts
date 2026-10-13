@@ -60,8 +60,10 @@ export class HomePage {
   readonly dataCoverage: string | null = null;
 
   get heroSubtitle(): string {
-    const base = "Answers are computed from your organization's incident records";
-    return this.dataCoverage ? `${base} for ${this.dataCoverage}.` : `${base}.`;
+    const base =
+      'Explore incident trends, SLA performance, affected assets, team workload ' +
+      'and the monitoring alerts behind each incident';
+    return this.dataCoverage ? `${base}, for ${this.dataCoverage}.` : `${base}.`;
   }
 
   readonly modes: ModeOption[] = [
@@ -229,7 +231,7 @@ export class HomePage {
     }
     return "The question couldn't be answered. Try again or rephrase it.";
   }
-  
+
   private addMessage(message: Omit<ChatMessage, 'id'>): void {
     this.messages.update((list) => [...list, { id: this.nextId++, ...message }]);
     this.scrollToBottom();

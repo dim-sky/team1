@@ -1,9 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   Global theme: dark purple
+   Όλα τα χρώματα της εφαρμογής ορίζονται ΜΟΝΟ εδώ.
+   Για να αλλάξεις θέμα, αλλάζεις αυτές τις τιμές.
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg: #120b1c;            /* page background */
+  --bg-top: #1b1029;        /* slight glow under the navbar */
+  --surface: #1c1329;       /* cards, sidebar, bubbles, inputs */
+  --surface-2: #281c3a;     /* hover, chips, icon tiles */
+
+  /* Borders */
+  --border: #35284b;
+  --border-strong: #5a4680;
+
+  /* Text */
+  --text: #ede8f6;
+  --text-soft: #c5badb;
+  --muted: #8d80a6;
+
+  /* Brand accent */
+  --accent: #8b3cf6;
+  --accent-hover: #a160ff;
+  --accent-soft: rgba(139, 60, 246, 0.18);
+  --on-accent: #ffffff;
+
+  /* Navbar */
+  --nav-bg: #0d0715;
+  --nav-bg-2: #1d1030;
+
+  /* Status */
+  --success: #5fd38d;
+  --warning-text: #f2c46d;
+  --error-bg: #2e1220;
+  --error-border: #5e2338;
+  --error-text: #ffb4c4;
+
+  /* Layout: το ύψος του navbar. Αλλάζεις μόνο αυτό για να το μεγαλώσεις/μικρύνεις. */
+  --nav-height: 72px;
+
+  /* Effects */
+  --shadow: rgba(0, 0, 0, 0.45);
+
+  --font: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
 html, body {
   margin: 0;
   padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(139, 60, 246, 0.45);
+  color: #ffffff;
+}
+
+/* Σκούρες μπάρες κύλισης */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
 }

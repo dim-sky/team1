@@ -14,7 +14,8 @@ export class Navbar {
 
   userName = input<string | undefined>();
 
-  brand = 'Team1';
+  // Το όνομα που εμφανίζεται δίπλα στο λογότυπο
+  brand = 'Skillakia';
   menuOpen = false;
 
   links = [

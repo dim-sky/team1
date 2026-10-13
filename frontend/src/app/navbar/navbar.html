@@ -1,6 +1,6 @@
 <nav class="navbar">
   <a class="brand" routerLink="/" (click)="closeMenu()">
-    <span class="brand-dot"></span>
+    <img class="brand-logo" src="/skillakia-emblem.png" alt="" width="36" height="36" />
     {{ brand }}
   </a>
 
@@ -24,11 +24,10 @@
     }
 
     @if (userName()) {
-    <li class="user-item">
-      <span class="user-name">{{ userName() }}</span>
-      <button type="button" class="logout-btn" (click)="logout()">Αποσύνδεση</button>
-    </li>
-  }
-
+      <li class="user-item">
+        <span class="user-name">{{ userName() }}</span>
+        <button type="button" class="logout-btn" (click)="logout()">Sign out</button>
+      </li>
+    }
   </ul>
 </nav>
