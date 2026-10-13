@@ -20,7 +20,7 @@ export class Navbar {
 
   links = [
     { label: 'Chat', path: '/home' },
-    { label: 'About', path: '/about' },
+    { label: 'Reports', path: '/report' },
     { label: 'Contact us', path: '/contact' },
   ];
 
