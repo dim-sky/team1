@@ -229,7 +229,7 @@ export class HomePage {
     }
     return "The question couldn't be answered. Try again or rephrase it.";
   }
-
+  
   private addMessage(message: Omit<ChatMessage, 'id'>): void {
     this.messages.update((list) => [...list, { id: this.nextId++, ...message }]);
     this.scrollToBottom();
