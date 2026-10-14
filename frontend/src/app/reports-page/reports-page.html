@@ -1,0 +1,114 @@
+<div class="reports-page">
+  <!-- Λίστα αναφορών (αριστερά): εμφανίζεται μόνο αν υπάρχουν 2+ αναφορές -->
+  @if (reports.length > 1) {
+  <aside class="report-list">
+    <h3 class="list-title">Αναφορές</h3>
+    <ul>
+      @for (r of reports; track r.id) {
+        <li>
+          <button
+            type="button"
+            class="report-btn"
+            [class.active]="r.id === selectedId()"
+            (click)="select(r.id)"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path
+                d="M4 20V10M10 20V4M16 20v-7M22 20H2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>{{ r.title }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </aside>
+  }
+
+  <!-- Κύρια περιοχή -->
+  <section class="report-main">
+    @if (selected(); as report) {
+      <header class="report-header">
+        <div>
+          <h2>{{ report.title }}</h2>
+          @if (report.description) {
+            <p>{{ report.description }}</p>
+          }
+        </div>
+
+        @if (urlStatus() === 'ok') {
+          <div class="actions">
+            <button type="button" class="action-btn" (click)="toggleFullscreen()">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Πλήρης οθόνη
+            </button>
+            <a class="action-btn" [href]="report.embedUrl" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Άνοιγμα σε νέα καρτέλα
+            </a>
+          </div>
+        }
+      </header>
+
+      <div class="frame-card" #frameWrap>
+        @if (safeUrl(); as url) {
+          @if (isLoading()) {
+            <div class="loading">
+              <span class="spinner"></span>
+              Φόρτωση αναφοράς...
+            </div>
+          }
+          <iframe
+            [src]="url"
+            [title]="report.title"
+            allowfullscreen
+            (load)="onFrameLoad()"
+          ></iframe>
+        } @else if (urlStatus() === 'empty') {
+          <div class="placeholder">
+            <h3>Δεν έχει οριστεί URL</h3>
+            <p>
+              Συμπλήρωσε το <code>embedUrl</code> για την αναφορά
+              <strong>{{ report.title }}</strong> στο αρχείο <code>powerbi-config.ts</code>.
+            </p>
+          </div>
+        } @else {
+          <div class="placeholder error">
+            <h3>Μη έγκυρο URL</h3>
+            <p>
+              Το <code>embedUrl</code> πρέπει να ξεκινά με
+              <code>https://app.powerbi.com/</code>.
+            </p>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="placeholder">
+        <h3>Δεν υπάρχουν αναφορές</h3>
+        <p>Πρόσθεσε αναφορές στο αρχείο <code>powerbi-config.ts</code>.</p>
+      </div>
+    }
+  </section>
+</div>

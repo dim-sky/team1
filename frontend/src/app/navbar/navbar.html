@@ -1,0 +1,33 @@
+<nav class="navbar">
+  <a class="brand" routerLink="/" (click)="closeMenu()">
+    <img class="brand-logo" src="/skillakia-emblem.png" alt="" width="36" height="36" />
+    {{ brand }}
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-label="Toggle navigation"
+    [attr.aria-expanded]="menuOpen"
+    (click)="toggleMenu()"
+  >
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" [class.open]="menuOpen">
+    @for (link of links; track link.path) {
+      <li>
+        <a [routerLink]="link.path" routerLinkActive="active" (click)="closeMenu()">
+          {{ link.label }}
+        </a>
+      </li>
+    }
+
+    @if (userName()) {
+      <li class="user-item">
+        <span class="user-name">{{ userName() }}</span>
+        <button type="button" class="logout-btn" (click)="logout()">Sign out</button>
+      </li>
+    }
+  </ul>
+</nav>

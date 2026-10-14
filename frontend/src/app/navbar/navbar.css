@@ -1,0 +1,200 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: var(--nav-height);
+  background: linear-gradient(90deg, var(--nav-bg) 0%, var(--nav-bg-2) 100%);
+  /* Μαλακή σκιά σε δύο επίπεδα: μια κοντινή και μια που "σβήνει" μακριά */
+  box-shadow:
+    0 1px 3px var(--shadow),
+    0 10px 30px -6px var(--shadow);
+  font-family: var(--font);
+}
+
+/* Λεπτή φωτεινή μωβ γραμμή στη βάση του navbar */
+.navbar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(161, 96, 255, 0) 0%,
+    rgba(161, 96, 255, 0.7) 50%,
+    rgba(161, 96, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ffffff;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+
+/* Το λογότυπο της ομάδας (Skillakia) δίπλα στο όνομα */
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(161, 96, 255, 0.55), 0 0 14px rgba(139, 60, 246, 0.45);
+  transition: transform 0.2s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.nav-links a.active {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.nav-links a:focus-visible,
+.logout-btn:focus-visible,
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 2px;
+}
+
+/* Hamburger button (mobile only) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 1rem 1rem;
+    background: var(--nav-bg);
+    box-shadow: 0 8px 14px var(--shadow);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ---------- Όνομα χρήστη και αποσύνδεση ---------- */
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.user-name {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-hover);
+}
+
+@media (max-width: 700px) {
+  .user-item {
+    justify-content: space-between;
+    margin: 0.5rem 0 0;
+    padding: 0.75rem 1rem 0;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}

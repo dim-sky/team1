@@ -1,0 +1,23 @@
+name: Frontend CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci                       # καθαρή εγκατάσταση από package-lock.json
+      # - run: npx ng lint                  # αν έχεις στήσει angular-eslint  --  Το αγνοούμε για τώρα δεν έχω προσθέσει το angular-eslint 
+      - run: npx ng test --watch=false    # τρέχει τα tests μία φορά και τελειώνει
+      - run: npx ng build                 # production build, πιάνει λάθη τύπων και templates
+      - run: npm audit --audit-level=high # γνωστές ευπάθειες στα dependencies

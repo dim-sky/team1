@@ -1,0 +1,132 @@
+:host {
+  display: block;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(139, 60, 246, 0.22), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(161, 96, 255, 0.14), transparent 45%),
+    var(--bg);
+  font-family: var(--font);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.75rem 2.25rem 2.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px var(--shadow);
+  text-align: center;
+  animation: rise 0.4s ease-out;
+}
+
+/* Λογότυπο ομάδας και όνομα */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.brand-logo {
+  width: 200px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 0 0 1px rgba(161, 96, 255, 0.35), 0 14px 36px rgba(0, 0, 0, 0.45);
+}
+
+.brand-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  color: var(--text);
+}
+
+.subtitle {
+  margin: 0 0 2rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.login-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--on-accent);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(139, 60, 246, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(139, 60, 246, 0.45);
+}
+
+.login-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-btn:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 3px;
+}
+
+.login-btn:disabled {
+  opacity: 0.8;
+  cursor: wait;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.footnote {
+  margin: 1.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-card {
+    animation: none;
+  }
+}

@@ -1,0 +1,166 @@
+<div class="chat-page">
+
+  <!-- Έτοιμες ερωτήσεις (αριστερά, πάντα ορατές) -->
+  <aside class="suggestions" aria-label="Suggested questions">
+    <h2 class="suggestions-title">Suggested questions</h2>
+    <ul>
+      @for (s of starters; track s.question) {
+        <li>
+          <button
+            type="button"
+            class="suggestion-btn"
+            [title]="s.question"
+            [disabled]="isTyping()"
+            (click)="askStarter(s)"
+          >
+            <span class="suggestion-icon" aria-hidden="true">
+              @switch (s.icon) {
+                @case ('volume') {
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M3 20h18M6 16v-5M11 16V6M16 16v-8" fill="none" stroke="currentColor"
+                          stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                }
+                @case ('speed') {
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+                    <path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                }
+                @case ('sla') {
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                    <path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                }
+                @case ('causes') {
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"
+                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                  </svg>
+                }
+                @case ('monitoring') {
+                  <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                }
+              }
+            </span>
+            <span class="suggestion-text">
+              <span class="suggestion-category">{{ s.category }}</span>
+              <span class="suggestion-title">{{ s.title }}</span>
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <!-- Κύριο chat -->
+  <div class="chat-main" [class.is-empty]="isEmpty()">
+
+    @if (isEmpty()) {
+      <!-- Αρχική οθόνη: τίτλος, πηγές δεδομένων -->
+      <header class="hero">
+        <div class="hero-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <h1>Ask anything about your IT operations</h1>
+        <p class="hero-sub">{{ heroSubtitle }}</p>
+        <ul class="sources" aria-label="Data the assistant can read">
+          @for (d of datasets; track d) {
+            <li>{{ d }}</li>
+          }
+        </ul>
+      </header>
+    } @else {
+      <!-- Συνομιλία -->
+      <div class="messages" #messageList>
+        <div class="messages-inner">
+          @for (msg of messages(); track msg.id) {
+            <div class="message-row" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'bot'">
+              <div class="message-content">
+                @if (msg.sender === 'bot' && msg.mode === 'general' && !msg.isError) {
+                  <span class="message-meta">General knowledge, not based on your data</span>
+                }
+                <div class="bubble" [class.error]="msg.isError">{{ msg.text }}</div>
+              </div>
+            </div>
+          }
+
+          @if (isTyping()) {
+            <div class="message-row bot" aria-live="polite">
+              <div class="bubble typing">
+                <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="typing-label">
+                  {{ mode() === 'project' ? 'Querying incident data' : 'Thinking' }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Πλαίσιο εισαγωγής: στο κέντρο όταν είναι άδειο, κάτω όταν υπάρχει συνομιλία -->
+    <div class="composer">
+      <div class="composer-box">
+        <textarea
+          #input
+          rows="1"
+          aria-label="Message"
+          [placeholder]="activeMode().placeholder"
+          [value]="draft()"
+          (input)="onInput($event)"
+          (keydown)="onKeydown($event)"
+        ></textarea>
+
+        <div class="composer-footer">
+          <div
+            class="mode-switch"
+            role="radiogroup"
+            aria-label="Answer source"
+            [class.general]="mode() === 'general'"
+          >
+            <span class="thumb" aria-hidden="true"></span>
+            @for (m of modes; track m.value) {
+              <button
+                type="button"
+                role="radio"
+                [attr.aria-checked]="mode() === m.value"
+                [class.active]="mode() === m.value"
+                [title]="m.description"
+                (click)="setMode(m.value)"
+              >
+                {{ m.label }}
+              </button>
+            }
+          </div>
+
+          <button
+            type="button"
+            class="send-btn"
+            aria-label="Send message"
+            [disabled]="!draft().trim() || isTyping()"
+            (click)="send()"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <p class="trust-line" [class.general]="mode() === 'general'">{{ activeMode().description }}</p>
+    </div>
+  </div>
+</div>
