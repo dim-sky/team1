@@ -14,7 +14,9 @@ import { routes } from './app.routes';
 const TENANT_ID = 'b1732512-60e5-48fb-92e8-8d6902ac1349';
 const SPA_CLIENT_ID = '37815f98-bbed-4937-95a3-d0ca7960c989';
 const LOGIN_SCOPES = ['User.Read'];
-// Όταν φτιάξεις backend: const API_SCOPE = 'api://<api-client-id>/access_as_user';
+
+// <-- ΣΥΜΠΛΗΡΩΣΕ: το client id του app registration "Team1 API"
+const API_SCOPE = 'api://<API_CLIENT_ID>/access_as_user';
 
 const msalInstance = new PublicClientApplication({
   auth: {
@@ -35,9 +37,8 @@ export const appConfig: ApplicationConfig = {
 
     provideHttpClient(withInterceptorsFromDi()),
 
-    // Απενεργοποιημένο προς το παρόν: το backend δεν ελέγχει ακόμα tokens.
-    // Ενεργοποίησέ το όταν φτιάξεις backend με δικό του scope (API_SCOPE).
-    // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+    // Προσθέτει αυτόματα "Authorization: Bearer <token>" σε κάθε κλήση προς το baseURL
+    { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
 
     // Ρυθμίσεις MSAL
     { provide: MSAL_INSTANCE, useValue: msalInstance },
@@ -49,8 +50,8 @@ export const appConfig: ApplicationConfig = {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useValue: {
         interactionType: InteractionType.Redirect,
-        // Αργότερα: [API_SCOPE]
-        protectedResourceMap: new Map([[baseURL, LOGIN_SCOPES]]),
+        // Για κάθε κλήση προς το backend ζητάει token για το δικό μας API
+        protectedResourceMap: new Map([[baseURL, [API_SCOPE]]]),
       },
     },
 
