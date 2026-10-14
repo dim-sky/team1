@@ -2,13 +2,12 @@ import { Component, signal } from '@angular/core';
 
 interface TeamMember {
   name: string;
-  role: string;
+  /** A short, general description of the person (not their role in the project). */
   description: string;
   /** Path to the photo in public/, e.g. '/team/maria.jpg'. Leave empty to show initials. */
   photo?: string;
   email?: string;
-  linkedin?: string;
-  github?: string;
+  phone?: string;
 }
 
 @Component({
@@ -22,58 +21,45 @@ export class ContactPage {
   // Τα μέλη της ομάδας: συμπλήρωσε τα στοιχεία σας εδώ.
   // Οι φωτογραφίες μπαίνουν στο φάκελο public/team/
   // Αν λείπει μια φωτογραφία, εμφανίζονται τα αρχικά του ονόματος.
-  // Αν λείπει email/linkedin/github, το αντίστοιχο κουμπί δεν εμφανίζεται.
+  // Αν λείπει email ή phone, η αντίστοιχη γραμμή δεν εμφανίζεται.
   // ============================================================
   readonly members: TeamMember[] = [
     {
-      name: 'Member One',
-      role: 'Data engineering',
+      name: 'Konstantinos Goutsias',
       description:
-        'Built the Databricks pipelines that ingest the raw files and turn them into trusted Bronze and Silver tables, including the data-quality checks and quarantine.',
-      photo: '/team/member1.jpg',
-      email: 'member1@example.com',
-      linkedin: 'https://www.linkedin.com/in/member1',
-      github: 'https://github.com/member1',
+        'Electrical and Computer Engineering graduate of the Technical University of Crete, with a specialization in Machine Learning and Artificial Intelligence.',
+      photo: '/team/kostas.png',
+      email: 'gkostassg@gmail.com',
+      phone: '+30 694 831 1000',
     },
     {
-      name: 'Member Two',
-      role: 'Analytics',
+      name: 'Anna Allagioti',
       description:
-        'Designed the Gold star schema and the Fabric semantic model, wrote the DAX measures and built the Power BI report.',
-      photo: '/team/member2.jpg',
-      email: 'member2@example.com',
-      linkedin: 'https://www.linkedin.com/in/member2',
-      github: 'https://github.com/member2',
+        'Electrical and Computer Engineer, currently an MSc student in Data Science and Information Technologies with a specialization in Artificial Intelligence.',
+      photo: '/team/anna.png',
+      email: 'annaallayioti@gmail.com',
+      phone: '+30 694 789 8342',
     },
     {
-      name: 'Member Three',
-      role: 'AI and API',
+      name: 'Grigoris Triantafyllou',
       description:
-        'Built the FastAPI layer and the LangChain assistant, including the data tools the model is allowed to call and how answers are grounded.',
-      photo: '/team/member3.jpg',
-      email: 'member3@example.com',
-      linkedin: 'https://www.linkedin.com/in/member3',
-      github: 'https://github.com/member3',
+        'Informatics graduate of the Athens University of Economics and Business (AUEB).',
+      photo: '/team/greg.png',
+      email: 'gregorestriantafyllou@gmail.com',
+      phone: '+30 698 836 1234',
     },
     {
-      name: 'Member Four',
-      role: 'Cloud and DevOps',
+      name: 'Solonas',
       description:
-        'Set up the Azure resources, identity and Key Vault, and the CI/CD pipeline that tests and deploys the solution.',
-      photo: '/team/member4.jpg',
-      email: 'member4@example.com',
-      linkedin: 'https://www.linkedin.com/in/member4',
-      github: 'https://github.com/member4',
+        'Comes from the School of Electrical and Computer Engineering at the National Technical University of Athens (NTUA).',
+      photo: '/team/solonas.png',
+      email: 'solonasdamigos@gmail.com',
+      phone: '+30 694 628 0070',
     },
     {
-      name: 'Member Five',
-      role: 'Project management',
-      description:
-        'Planned the milestones, coordinated the work across the team, tracked risks and dependencies, and owned the final delivery.',
-      photo: '/team/member5.jpg',
-      email: 'member5@example.com',
-      linkedin: 'https://www.linkedin.com/in/member5',
-      github: 'https://github.com/member5',
+      // Placeholder: συμπλήρωσε όταν έχεις τα στοιχεία
+      name: 'Team Member',
+      description: 'Details coming soon.',
     },
   ];
 

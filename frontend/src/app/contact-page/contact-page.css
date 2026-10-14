@@ -34,25 +34,22 @@
 }
 
 /* ---------- Team grid ---------- */
-/* 3 κάρτες στην πρώτη σειρά, 2 κεντραρισμένες στη δεύτερη */
+/* Και τα 5 μέλη στην ίδια σειρά */
 .team {
   list-style: none;
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 .member {
-  flex: 1 1 300px;
-  max-width: calc((100% - 2.5rem) / 3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 1.75rem 1.1rem 1.25rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -67,8 +64,8 @@
 
 /* ---------- Photo ---------- */
 .photo {
-  width: 120px;
-  height: 120px;
+  width: 108px;
+  height: 108px;
   margin-bottom: 1.25rem;
   border-radius: 50%;
   overflow: hidden;
@@ -91,65 +88,64 @@
   justify-content: center;
   background: linear-gradient(135deg, #3b1678 0%, var(--accent) 100%);
   color: #ffffff;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 /* ---------- Text ---------- */
 .member h2 {
-  margin: 0 0 0.3rem;
-  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
   font-weight: 700;
-}
-
-.role {
-  margin: 0 0 1rem;
-  color: var(--accent-hover);
-  font-size: 0.9rem;
-  font-weight: 600;
 }
 
 .description {
   margin: 0 0 1.5rem;
   color: var(--text-soft);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   line-height: 1.55;
-  flex: 1; /* σπρώχνει τα κουμπιά στο κάτω μέρος, ώστε να ευθυγραμμίζονται */
+  flex: 1; /* σπρώχνει τα στοιχεία επικοινωνίας στο κάτω μέρος, ώστε να ευθυγραμμίζονται */
 }
 
-/* ---------- Contact links ---------- */
-.links {
+/* ---------- Contact info (απλό κείμενο, χωρίς links) ---------- */
+.contact-info {
+  width: 100%;
+  margin: 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.55rem;
 }
 
-.link {
-  display: inline-flex;
+.contact-row {
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface-2);
-  color: var(--text-soft);
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.contact-row dt {
+  display: flex;
+  color: var(--accent-hover);
+}
+
+.contact-row dd {
+  margin: 0;
+  color: var(--text);
   font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  overflow-wrap: anywhere;
+  user-select: all; /* ένα κλικ επιλέγει όλο το email/τηλέφωνο για αντιγραφή */
 }
 
-.link:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
-
-.link:focus-visible {
-  outline: 2px solid var(--accent-hover);
-  outline-offset: 2px;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -163,13 +159,20 @@
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1000px) {
-  .member {
-    max-width: calc((100% - 1.25rem) / 2);
+/* Σε μικρότερες οθόνες δεν χωράνε 5 στη σειρά */
+@media (max-width: 1150px) {
+  .team {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
+  .team {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
   .contact-page {
     padding-top: 2.5rem;
   }
@@ -178,7 +181,7 @@
     font-size: 1.9rem;
   }
 
-  .member {
-    max-width: 100%;
+  .team {
+    grid-template-columns: 1fr;
   }
 }
