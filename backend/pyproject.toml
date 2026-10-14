@@ -1,0 +1,31 @@
+[project]
+name = "myserver"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "dimsky", email = "skylakos99@hotmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "databricks-sql-connector>=4.6.0",
+    "deepagents>=0.7.24",
+    "fastapi>=0.143.0",
+    "langchain>=1.4.5",
+    "langchain-openai>=1.7.0",
+    "langgraph>=1.2.14",
+    "pyarrow>=26.0.0",
+    "pydantic>=2.14.0",
+    "python-dotenv>=1.2.4",
+    "requests>=2.34.2",
+    "sqlglot>=30.22.0",
+    "truststore>=0.10.4",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+myserver = "myserver:main"
+
+[build-system]
+requires = ["uv_build>=0.12.24,<0.13.0"]
+build-backend = "uv_build"
