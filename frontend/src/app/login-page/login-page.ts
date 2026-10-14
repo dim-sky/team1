@@ -14,7 +14,7 @@ export class LoginPage {
   private msal = inject(MsalService);
   private broadcast = inject(MsalBroadcastService);
 
-  brand = 'Team1';
+  brand = 'Skillakia';
   isRedirecting = signal(false);
 
   // true μόνο όταν το MSAL δεν κάνει τίποτα άλλο (π.χ. δεν επεξεργάζεται ακόμα την επιστροφή από logout)
