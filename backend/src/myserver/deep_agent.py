@@ -1,26 +1,29 @@
 """
-Deep agent για μηνύματα με πολλές ερωτήσεις πάνω στα incident δεδομένα.
+Deep agent for messages containing multiple questions about incident data.
 
-Ισχύουν οι ΙΔΙΟΙ κανόνες με το graph, χωρίς αλλαγές στα αρχεία του project:
-ξαναχρησιμοποιούνται τα SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, ERROR_PROMPT,
-FIX_SQL_PROMPT και FORMAT_RESULT από το prompts.py.
+The SAME rules as the graph apply, without modifying any project files:
+SYSTEM_PROMPT, SQL_SYSTEM_PROMPT, ERROR_PROMPT, FIX_SQL_PROMPT,
+and FORMAT_RESULT are reused from prompts.py.
 
 Orchestrator (deep agent)
-  ├─ write_todos                (built-in)  -> σπάει το μήνυμα σε υπο-ερωτήσεις
-  ├─ ask_incident_db            (tool)      -> το υπάρχον graph για ΜΙΑ απλή ερώτηση
-  └─ task -> "sql-analyst"      (subagent)  -> σύνθετες ερωτήσεις
-        1. gate:    ίδιος έλεγχος διαθεσιμότητας με το check_answerability (SYSTEM_PROMPT)
-        2. analyst: γράφει/τρέχει SQL με run_sql (SQL_SYSTEM_PROMPT + ERROR/FIX κανόνες)
+  ├─ write_todos                (built-in)  -> breaks the message into sub-questions
+  ├─ ask_incident_db            (tool)      -> uses the existing graph for ONE simple question
+  └─ task -> "sql-analyst"      (subagent)  -> handles complex questions
+        1. gate:    performs the same answerability check as check_answerability (SYSTEM_PROMPT)
+        2. analyst: generates and executes SQL using run_sql
+                    (SQL_SYSTEM_PROMPT + ERROR/FIX rules)
 
-Κανόνες που επιβάλλονται σε ΚΩΔΙΚΑ (όχι μόνο στο prompt), μέσα στο run_sql:
-  - ένα μόνο statement, μόνο SELECT / WITH ... SELECT
-  - μόνο πίνακες του data2026acc123456.team1 (ή CTE)
-  - όχι SELECT * / t.* (επιτρέπεται COUNT(*))
-  - όχι η στήλη raw_record
-  - timeout και όριο γραμμών
-Και όριο βημάτων για τον subagent και τον orchestrator (αντίστοιχο του MAX_RETRIES).
+Rules enforced directly in CODE (not just through prompts), inside run_sql:
+  - Only one SQL statement, restricted to SELECT / WITH ... SELECT
+  - Only tables from data2026acc123456.team1 (or CTEs)
+  - No SELECT * / t.* (COUNT(*) is allowed)
+  - Access to the raw_record column is prohibited
+  - Query timeout and row limits
 
-Χρήση:  from .deep_agent import ask_deep_agent
+Execution step limits are also applied to both the subagent and the
+orchestrator (similar to MAX_RETRIES).
+
+Usage: from .deep_agent import ask_deep_agent
 """
 import os
 from typing import Annotated, Literal
