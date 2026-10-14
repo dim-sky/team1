@@ -16,7 +16,7 @@ const SPA_CLIENT_ID = '37815f98-bbed-4937-95a3-d0ca7960c989';
 const LOGIN_SCOPES = ['User.Read'];
 
 // <-- ΣΥΜΠΛΗΡΩΣΕ: το client id του app registration "Team1 API"
-const API_SCOPE = 'api://<API_CLIENT_ID>/access_as_user';
+const API_SCOPE = 'api://fb46f4fe-fdab-471f-bd80-daf2e4b5a75e/access_as_user';
 
 const msalInstance = new PublicClientApplication({
   auth: {
@@ -51,7 +51,8 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         interactionType: InteractionType.Redirect,
         // Για κάθε κλήση προς το backend ζητάει token για το δικό μας API
-        protectedResourceMap: new Map([[baseURL, [API_SCOPE]]]),
+        protectedResourceMap: new Map([[`${baseURL}/*`, [API_SCOPE]]]),
+        // protectedResourceMap: new Map([[baseURL, [API_SCOPE]]]),
       },
     },
 
