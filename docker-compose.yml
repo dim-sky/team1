@@ -1,0 +1,55 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: team1-backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    image: team1-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ---------- Knowledge graph ----------
+
+  neo4j:
+    image: neo4j:5.26
+    env_file:
+      - ./knowledge-graph/.env   # uses NEO4J_AUTH from this file
+    environment:
+      NEO4J_server_memory_heap_max__size: 1G
+      NEO4J_server_memory_pagecache_size: 512M
+    ports:
+      - "7474:7474"   # browser UI: http://localhost:7474
+      - "7687:7687"   # bolt protocol, used by the loader
+    volumes:
+      - neo4j_data:/data   # keeps the graph when the container is recreated
+    restart: unless-stopped
+
+  # One-off job: docker compose run --rm graph-loader
+  graph-loader:
+    build:
+      context: ./knowledge-graph
+    image: team1-knowledge-graph
+    env_file:
+      - ./knowledge-graph/.env   # same file: NEO4J_AUTH + Databricks settings
+    environment:
+      NEO4J_URI: bolt://neo4j:7687
+      GOLD_SCHEMA: data2026acc123456.team1
+    depends_on:
+      - neo4j
+    profiles:
+      - tools   # not started by "docker compose up", only when you run it
+    restart: "no"
+
+volumes:
+  neo4j_data:
