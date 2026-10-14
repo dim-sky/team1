@@ -1,0 +1,64 @@
+<div class="contact-page">
+  <header class="intro">
+    <h1>Meet the team</h1>
+    <p>
+      Five people built this platform end to end, from the raw data to the assistant.
+      Reach out to whoever owns the part you're interested in.
+    </p>
+  </header>
+
+  <ul class="team">
+    @for (m of members; track m.name) {
+      <li class="member">
+        <div class="photo">
+          @if (showPhoto(m)) {
+            <img [src]="m.photo" [alt]="'Photo of ' + m.name" width="120" height="120"
+                 (error)="onPhotoError(m)" />
+          } @else {
+            <span class="initials" aria-hidden="true">{{ initials(m.name) }}</span>
+          }
+        </div>
+
+        <h2>{{ m.name }}</h2>
+        <p class="role">{{ m.role }}</p>
+        <p class="description">{{ m.description }}</p>
+
+        <div class="links">
+          @if (m.email) {
+            <a class="link" [href]="'mailto:' + m.email" [title]="m.email"
+               [attr.aria-label]="'Email ' + m.name">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Email
+            </a>
+          }
+          @if (m.linkedin) {
+            <a class="link" [href]="m.linkedin" target="_blank" rel="noopener noreferrer"
+               [attr.aria-label]="m.name + ' on LinkedIn (opens in a new tab)'">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M8 10.5V17M8 7.5v.01M12 17v-3.5a2 2 0 0 1 4 0V17M12 10.5V17" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              LinkedIn
+            </a>
+          }
+          @if (m.github) {
+            <a class="link" [href]="m.github" target="_blank" rel="noopener noreferrer"
+               [attr.aria-label]="m.name + ' on GitHub (opens in a new tab)'">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+              </svg>
+              GitHub
+            </a>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+</div>
