@@ -1,0 +1,26 @@
+team_id,team_name,department,manager_email,location,support_hours,on_call,created_date
+T01,Service Desk L1,Service Desk,service.desk.l1.lead@example.com,Athens,08:00-20:00,N,2020-12-11
+T02,Service Desk L2,Service Desk,service.desk.l2.lead@example.com,Athens,24x7,Y,2020-03-18
+T03,Network Operations,Infrastructure,network.operations.lead@example.com,Athens,24x7,Y,2022-05-04
+T04,Server & Virtualization,Infrastructure,server.virtualization.lead@example.com,Thessaloniki,24x7,Y,2022-01-30
+T05,Database Administration,Infrastructure,database.administration.lead@example.com,Athens,08:00-20:00,N,2021-11-24
+T06,Cloud Platform,Infrastructure,cloud.platform.lead@example.com,Remote,24x7,Y,2021-03-09
+T07,Identity & Access,Security,identity.access.lead@example.com,Athens,08:00-20:00,N,2020-11-14
+T08,Security Operations,Security,security.operations.lead@example.com,Athens,24x7,Y,2024-08-21
+T09,ERP Applications,Applications,erp.applications.lead@example.com,Thessaloniki,08:00-18:00,N,2020-09-27
+T10,CRM Applications,Applications,crm.applications.lead@example.com,Athens,08:00-18:00,N,2023-08-03
+T11,Web & Digital,Applications,web.digital.lead@example.com,Remote,08:00-20:00,N,2020-04-08
+T12,Collaboration & Email,Workplace,collaboration.email.lead@example.com,Athens,08:00-20:00,N,2020-04-02
+T13,End User Computing,Workplace,end.user.computing.lead@example.com,Patras,08:00-18:00,N,2020-10-18
+T14,Data Platform,Applications,data.platform.lead@example.com,Remote,08:00-20:00,N,2021-11-10
+T15,Storage & Backup,Infrastructure,storage.backup.lead@example.com,Thessaloniki,24x7,Y,2021-12-23
+T16,Telephony & Contact Center,Workplace,telephony.contact.center.lead@example.com,Athens,08:00-20:00,N,2024-04-19
+T17,DevOps & Release,Applications,devops.release.lead@example.com,Remote,08:00-20:00,N,2020-03-23
+T18,Middleware & Integration,Applications,middleware.integration.lead@example.com,Athens,08:00-18:00,N,2024-10-09
+T19,Payments Engineering,Applications,payments.engineering.lead@example.com,Athens,24x7,Y,2021-09-09
+T20,Monitoring & Observability,Infrastructure,monitoring.observability.lead@example.com,Remote,24x7,Y,2024-08-20
+T21,Vulnerability Management,Security,vulnerability.management.lead@example.com,Athens,08:00-18:00,N,2023-07-27
+T22,Field Support North,Workplace,field.support.north.lead@example.com,Thessaloniki,08:00-18:00,N,2021-11-15
+T23,Field Support South,Workplace,field.support.south.lead@example.com,Heraklion,08:00-18:00,N,2023-10-27
+T24,Vendor Management,Service Desk,vendor.management.lead@example.com,Athens,08:00-18:00,N,2022-05-14
+T13,  end user computing ,Workplace,end.user.computing.lead@example.com,Patras,08:00-18:00,N,2020-10-18

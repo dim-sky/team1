@@ -1,0 +1,404 @@
+asset_id,asset_name,asset_type,service_id,service_name,environment,site,owner_team_id,criticality,install_date,lifecycle_status
+AST-00001,kubernetes-node-0001,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure West Europe,T06,Critical,2020-05-13,Active
+AST-00002,virtual-machine-0002,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Athens DC1,T06,Critical,2018-10-28,Active
+AST-00003,database-server-0003,Database Server,SVC-PAY,Payments API,Production,Athens DC1,T11,Medium,2021-11-28,Active
+AST-00004,identity-server-0004,Identity Server,SVC-SSO,Identity / SSO,Development,Thessaloniki DC,T07,Low,2022-11-29,Active
+AST-00005,application-server-0005,Application Server,SVC-ERP,ERP,Production,Thessaloniki DC,T09,High,2025-04-11,Active
+AST-00006,database-server-0006,Database Server,SVC-ERP,ERP,Production,Azure West Europe,T09,Medium,2025-02-04,Active
+AST-00007,application-server-0007,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,Medium,2025-12-20,Active
+AST-00008,application-server-0008,Application Server,SVC-ERP,ERP,Development,Athens DC2,T09,Low,2021-12-07,Active
+AST-00009,firewall-0009,Firewall,SVC-NET,Core Network,Development,Athens DC2,T03,Low,2025-03-03,Active
+AST-00010,mail-server-0010,Mail Server,SVC-EMAIL,Corporate Email,Production,Thessaloniki DC,T12,Critical,2020-04-11,Active
+AST-00011,application-server-0011,Application Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,Critical,2025-07-11,Active
+AST-00012,storage-array-0012,Storage Array,SVC-FILE,File Storage,Production,Athens DC2,T04,High,2024-05-03,Active
+AST-00013,load-balancer-0013,Load Balancer,SVC-WEB,Public Website,Staging,Thessaloniki DC,T11,Low,2019-03-06,Active
+AST-00014,application-server-0014,Application Server,SVC-ERP,ERP,Production,Athens DC2,T09,Medium,2019-05-13,Active
+AST-00015,identity-server-0015,Identity Server,SVC-SSO,Identity / SSO,Staging,Azure West Europe,T07,Medium,2022-07-02,Active
+AST-00016,database-server-0016,Database Server,SVC-DWH,Data Warehouse,Production,Azure Germany WC,T14,Critical,2024-07-15,Active
+AST-00017,database-server-0017,Database Server,SVC-ERP,ERP,Staging,Athens DC2,T09,Medium,2018-01-11,Retired
+AST-00018,desktop-0018,Desktop,SVC-WKS,End User Devices,Development,Athens DC2,T13,Low,2025-05-28,Active
+AST-00019,siem-collector-0019,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Thessaloniki DC,T08,High,2022-08-03,Retired
+AST-00020,database-server-0020,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,High,2018-12-14,Retired
+AST-00021,log-server-0021,Log Server,SVC-SIEM,Security Monitoring,Production,Athens DC1,T08,High,2025-06-20,Active
+AST-00022,application-server-0022,Application Server,SVC-ERP,ERP,Staging,Athens DC1,T09,Low,2019-02-03,Active
+AST-00023,database-server-0023,Database Server,SVC-DWH,Data Warehouse,Production,Azure Germany WC,T14,Medium,2021-08-07,Maintenance
+AST-00024,database-server-0024,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Medium,2023-07-13,Active
+AST-00025,etl-server-0025,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,High,2018-07-18,Active
+AST-00026,web-server-0026,Web Server,SVC-HR,HR Portal,Production,Athens DC1,T09,High,2024-01-09,Active
+AST-00027,vpn-appliance-0027,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Thessaloniki DC,T03,High,2022-05-17,Active
+AST-00028,router-0028,Router,SVC-NET,Core Network,Production,Azure Germany WC,T03,High,2024-02-26,Retired
+AST-00029,application-server-0029,Application Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,Critical,2019-08-15,Active
+AST-00030,router-0030,Router,SVC-NET,Core Network,Production,Azure West Europe,T03,Critical,2021-12-21,Active
+AST-00031,mail-server-0031,Mail Server,SVC-EMAIL,Corporate Email,Production,Azure West Europe,T12,Medium,2020-11-20,Active
+AST-00032,application-server-0032,Application Server,SVC-ERP,ERP,Production,Athens DC2,T09,Medium,2021-10-25,Active
+AST-00033,database-server-0033,Database Server,SVC-CRM,CRM,Staging,Athens DC2,T10,Low,2021-10-08,Active
+AST-00034,siem-collector-0034,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure Germany WC,T08,High,2018-10-17,Retired
+AST-00035,siem-collector-0035,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure West Europe,T08,Critical,2022-02-04,Active
+AST-00036,identity-server-0036,Identity Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,High,2021-04-27,Active
+AST-00037,virtual-machine-0037,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure West Europe,T06,Medium,2024-03-19,Maintenance
+AST-00038,etl-server-0038,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,Critical,2019-11-08,Maintenance
+AST-00039,web-server-0039,Web Server,SVC-HR,HR Portal,Production,Athens DC1,T09,crit,2022-12-20,Active
+AST-00040,siem-collector-0040,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure Germany WC,T08,High,2025-03-30,Active
+AST-00041,web-server-0041,Web Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,High,2025-07-29,Active
+AST-00042,web-server-0042,Web Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,Medium,2022-12-19,Active
+AST-00043,application-server-0043,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,High,2020-04-05,Active
+AST-00044,firewall-0044,Firewall,SVC-NET,Core Network,Production,Azure West Europe,T03,Critical,2025-11-26,Active
+AST-00045,application-server-0045,Application Server,SVC-ERP,ERP,Staging,Azure Germany WC,T09,Low,2018-08-16,Active
+AST-00046,etl-server-0046,ETL Server,SVC-DWH,Data Warehouse,Production,Thessaloniki DC,T14,High,2025-06-24,Active
+AST-00047,web-server-0047,Web Server,SVC-WEB,Public Website,Staging,Azure Germany WC,T11,Medium,2023-03-16,Maintenance
+AST-00048,kubernetes-node-0048,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Development,Thessaloniki DC,T06,Low,2025-12-27,Active
+AST-00049,web-server-0049,Web Server,SVC-WEB,Public Website,Production,Azure Germany WC,T11,High,2020-04-26,Active
+AST-00050,firewall-0050,Firewall,SVC-VPN,Remote Access VPN,Production,Thessaloniki DC,T03,Medium,2022-02-26,Active
+AST-00051,siem-collector-0051,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure West Europe,T08,Critical,2018-05-17,Active
+AST-00052,kubernetes-node-0052,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Athens DC2,T06,Medium,2021-10-04,Active
+AST-00053,identity-server-0053,Identity Server,SVC-SSO,Identity / SSO,Production,Athens DC1,T07,Medium,2025-09-09,Active
+AST-00054,mail-gateway-0054,Mail Gateway,SVC-EMAIL,Corporate Email,Development,Athens DC2,T12,Low,2019-01-31,Active
+AST-00055,api-gateway-0055,API Gateway,SVC-PAY,Payments API,Production,Athens DC2,T11,Medium,2020-02-15,Active
+AST-00056,database-server-0056,Database Server,SVC-PAY,Payments API,Staging,Azure Germany WC,T11,Low,2025-11-16,Retired
+AST-00057,siem-collector-0057,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure West Europe,T08,High,2019-07-12,Active
+AST-00058,application-server-0058,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,High,2024-09-12,Active
+AST-00059,identity-server-0059,Identity Server,SVC-SSO,Identity / SSO,Staging,Athens DC2,T07,Low,2024-12-12,Active
+AST-00060,application-server-0060,Application Server,SVC-PAY,Payments API,Production,Athens DC2,T11,High,2023-08-13,Active
+AST-00061,application-server-0061,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,Critical,2023-06-17,Active
+AST-00062,firewall-0062,Firewall,SVC-NET,Core Network,Production,Athens DC1,T03,High,2025-06-17,Maintenance
+AST-00063,database-server-0063,Database Server,SVC-CRM,CRM,Production,Athens DC1,T10,Medium,2021-09-12,Active
+AST-00064,virtual-machine-0064,Virtual Machine,SVC-CLOUD,Cloud Hosting,Staging,Azure Germany WC,T06,Low,2021-04-11,Active
+AST-00065,firewall-0065,Firewall,SVC-VPN,Remote Access VPN,Production,Azure West Europe,T03,High,2022-06-04,Retired
+AST-00066,database-server-0066,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,High,2023-08-26,Retired
+AST-00067,application-server-0067,Application Server,SVC-HR,HR Portal,Production,Thessaloniki DC,T09,Medium,2020-08-18,Active
+AST-00068,application-server-0068,Application Server,SVC-PAY,Payments API,Production,Azure Germany WC,T11,High,2019-08-20,Active
+AST-00069,identity-server-0069,Identity Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Medium,2025-02-03,Active
+AST-00070,web-server-0070,Web Server,SVC-WEB,Public Website,Staging,Azure Germany WC,T11,Medium,2021-12-15,Active
+AST-00071,core-switch-0071,Core Switch,SVC-NET,Core Network,Development,Azure West Europe,T03,Low,2023-08-09,Active
+AST-00072,etl-server-0072,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,Medium,2020-08-22,Active
+AST-00073,vpn-appliance-0073,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,High,2022-01-16,Active
+AST-00074,kubernetes-node-0074,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Azure West Europe,T06,Low,2024-02-10,Active
+AST-00075,file-server-0075,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,Medium,2023-11-07,Active
+AST-00076,kubernetes-node-0076,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Athens DC2,T06,Low,2024-11-03,Retired
+AST-00077,etl-server-0077,ETL Server,SVC-DWH,Data Warehouse,Production,Azure Germany WC,T14,High,2025-10-21,Active
+AST-00078,storage-array-0078,Storage Array,SVC-FILE,File Storage,Staging,Azure Germany WC,T04,Medium,2024-06-04,Active
+AST-00079,application-server-0079,Application Server,SVC-HR,HR Portal,Development,Azure West Europe,T09,Low,2024-04-29,Active
+AST-00080,file-server-0080,File Server,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,Medium,2022-02-14,Active
+AST-00081,load-balancer-0081,Load Balancer,SVC-WEB,Public Website,Production,Thessaloniki DC,T11,High,2020-04-24,Active
+AST-00082,database-server-0082,Database Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,High,2021-04-05,Active
+AST-00083,laptop-0083,Laptop,SVC-WKS,End User Devices,Production,Azure West Europe,T13,Critical,2020-10-25,Active
+AST-00084,identity-server-0084,Identity Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Critical,2025-09-12,Active
+AST-00085,laptop-0085,Laptop,SVC-WKS,End User Devices,Staging,Azure West Europe,T13,Low,2020-12-28,Active
+AST-00086,directory-server-0086,Directory Server,SVC-SSO,Identity / SSO,Development,Azure Germany WC,T07,Low,2022-02-25,Active
+AST-00087,directory-server-0087,Directory Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Critical,2023-09-10,Active
+AST-00088,identity-server-0088,Identity Server,SVC-SSO,Identity / SSO,Staging,Athens DC2,T07,Low,2025-09-18,Active
+AST-00089,web-server-0089,Web Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,High,2025-05-17,Active
+AST-00090,mail-gateway-0090,Mail Gateway,SVC-EMAIL,Corporate Email,Staging,Thessaloniki DC,T12,Low,2021-11-13,Active
+AST-00091,virtual-machine-0091,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure West Europe,T06,Critical,2025-02-06,Active
+AST-00092,mail-server-0092,Mail Server,SVC-EMAIL,Corporate Email,Production,Athens DC2,T12,Medium,2018-08-02,Active
+AST-00093,core-switch-0093,Core Switch,SVC-NET,Core Network,Production,Athens DC2,T03,High,2025-02-20,Active
+AST-00094,application-server-0094,Application Server,SVC-CRM,CRM,Production,Azure West Europe,T10,Medium,2018-12-22,Active
+AST-00095,firewall-0095,Firewall,SVC-VPN,Remote Access VPN,Production,Thessaloniki DC,T03,High,2023-02-26,Active
+AST-00096,printer-0096,Printer,SVC-WKS,End User Devices,Production,Athens DC2,T13,Critical,2018-12-02,Active
+AST-00097,load-balancer-0097,Load Balancer,SVC-WEB,Public Website,Staging,Athens DC2,T11,Low,2023-01-14,Active
+AST-00098,core-switch-0098,Core Switch,SVC-NET,Core Network,Production,Thessaloniki DC,T03,Medium,2023-02-09,Active
+AST-00099,kubernetes-node-0099,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Critical,2023-08-18,Active
+AST-00100,etl-server-0100,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Critical,2018-11-24,Active
+AST-00101,database-server-0101,Database Server,SVC-PAY,Payments API,Staging,Athens DC2,T11,Medium,2019-07-02,Active
+AST-00102,router-0102,Router,SVC-NET,Core Network,Development,Azure West Europe,T03,Low,2021-09-15,Active
+AST-00103,application-server-0103,Application Server,SVC-HR,HR Portal,Production,Athens DC2,T09,High,2020-05-16,Active
+AST-00104,firewall-0104,Firewall,SVC-VPN,Remote Access VPN,Staging,Thessaloniki DC,T03,Low,2022-03-16,Active
+AST-00105,database-server-0105,Database Server,SVC-CRM,CRM,Production,Thessaloniki DC,T10,Critical,2020-11-23,Active
+AST-00106,application-server-0106,Application Server,SVC-HR,HR Portal,Development,Athens DC1,T09,Low,2018-09-23,Active
+AST-00107,directory-server-0107,Directory Server,SVC-SSO,Identity / SSO,Development,Athens DC2,T07,Low,2023-06-30,Active
+AST-00108,storage-array-0108,Storage Array,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,High,2021-06-10,Active
+AST-00109,load-balancer-0109,Load Balancer,SVC-WEB,Public Website,Staging,Azure Germany WC,T11,Medium,2021-08-14,Maintenance
+AST-00110,etl-server-0110,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Critical,2020-08-10,Active
+AST-00111,application-server-0111,Application Server,SVC-ERP,ERP,Production,Athens DC1,T09,Medium,2022-07-23,Retired
+AST-00112,laptop-0112,Laptop,SVC-WKS,End User Devices,Production,Athens DC2,T13,Medium,2022-02-13,Active
+AST-00113,application-server-0113,Application Server,SVC-HR,HR Portal,Production,Athens DC2,T09,Critical,2019-12-08,Active
+AST-00114,web-server-0114,Web Server,SVC-WEB,Public Website,Development,Athens DC2,T11,Low,2018-05-22,Maintenance
+AST-00115,etl-server-0115,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,High,2025-06-04,Active
+AST-00116,load-balancer-0116,Load Balancer,SVC-WEB,Public Website,Staging,Azure West Europe,T11,Medium,2019-07-27,Maintenance
+AST-00117,load-balancer-0117,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,Critical,2022-03-08,Active
+AST-00118,firewall-0118,Firewall,SVC-NET,Core Network,Production,Athens DC2,T03,High,2024-11-25,Active
+AST-00119,web-server-0119,Web Server,SVC-WEB,Public Website,Production,Athens DC1,T11,Medium,2024-07-03,Active
+AST-00120,web-server-0120,Web Server,SVC-HR,HR Portal,Development,Azure West Europe,T09,Low,2025-09-23,Active
+AST-00121,log-server-0121,Log Server,SVC-SIEM,Security Monitoring,Production,Azure Germany WC,T08,Medium,2018-07-07,Active
+AST-00122,laptop-0122,Laptop,SVC-WKS,End User Devices,Production,Athens DC2,T13,Critical,2023-08-14,Active
+AST-00123,vpn-appliance-0123,VPN Appliance,SVC-VPN,Remote Access VPN,Development,Athens DC1,T03,Low,2018-01-09,Active
+AST-00124,printer-0124,Printer,SVC-WKS,End User Devices,Staging,Thessaloniki DC,T13,Low,2019-12-21,Active
+AST-00125,load-balancer-0125,Load Balancer,SVC-WEB,Public Website,Production,Athens DC2,T11,Critical,2024-09-13,Active
+AST-00126,web-server-0126,Web Server,SVC-HR,HR Portal,Staging,Athens DC1,T09,Low,2023-07-06,Active
+AST-00127,web-server-0127,Web Server,SVC-WEB,Public Website,Production,Athens DC1,T11,High,2024-09-28,Active
+AST-00128,printer-0128,Printer,SVC-WKS,End User Devices,Production,Azure West Europe,T13,High,2021-12-27,Active
+AST-00129,desktop-0129,Desktop,SVC-WKS,End User Devices,Production,Azure Germany WC,T13,Medium,2022-03-15,Active
+AST-00130,web-server-0130,Web Server,SVC-HR,HR Portal,Staging,Thessaloniki DC,T09,Medium,2018-03-22,Active
+AST-00131,firewall-0131,Firewall,SVC-NET,Core Network,Production,Thessaloniki DC,T03,Medium,2018-05-05,Active
+AST-00132,database-server-0132,Database Server,SVC-CRM,CRM,Development,Azure West Europe,T10,Low,2019-07-18,Maintenance
+AST-00133,directory-server-0133,Directory Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Critical,2021-06-22,Active
+AST-00134,core-switch-0134,Core Switch,SVC-NET,Core Network,Production,Thessaloniki DC,T03,Critical,2023-11-26,Active
+AST-00135,router-0135,Router,SVC-NET,Core Network,Development,Athens DC1,T03,Low,2018-10-01,Active
+AST-00136,api-gateway-0136,API Gateway,SVC-PAY,Payments API,Staging,Azure Germany WC,T11,Low,2023-08-06,Active
+AST-00137,file-server-0137,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,Medium,2021-01-29,Active
+AST-00138,file-server-0138,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,Critical,2022-09-03,Active
+AST-00139,load-balancer-0139,Load Balancer,SVC-WEB,Public Website,Staging,Athens DC1,T11,Low,2023-05-12,Active
+AST-00140,vpn-appliance-0140,VPN Appliance,,Remote Access VPN,Production,Azure Germany WC,T03,High,2022-09-12,Active
+AST-00141,vpn-appliance-0141,VPN Appliance,SVC-VPN,Remote Access VPN,Staging,Athens DC1,T03,Low,2022-03-29,Retired
+AST-00142,load-balancer-0142,Load Balancer,SVC-WEB,Public Website,Staging,Azure West Europe,T11,Medium,2020-01-28,Active
+AST-00143,database-server-0143,Database Server,SVC-CRM,CRM,Production,Azure Germany WC,T10,Medium,2024-05-07,Active
+AST-00144,siem-collector-0144,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Azure West Europe,T08,Critical,2025-12-12,Active
+AST-00145,web-server-0145,Web Server,SVC-WEB,Public Website,Production,Thessaloniki DC,T11,Medium,2022-12-07,Maintenance
+AST-00146,storage-array-0146,Storage Array,SVC-FILE,File Storage,Staging,Azure Germany WC,T04,Medium,2020-12-08,Active
+AST-00147,virtual-machine-0147,Virtual Machine,SVC-CLOUD,Cloud Hosting,Staging,Thessaloniki DC,T06,Low,2023-12-08,Active
+AST-00148,identity-server-0148,Identity Server,SVC-SSO,Identity / SSO,Staging,Athens DC1,T07,Medium,2024-05-02,Active
+AST-00149,virtual-machine-0149,Virtual Machine,SVC-CLOUD,Cloud Hosting,Staging,Athens DC2,T06,Medium,2018-04-26,Active
+AST-00150,application-server-0150,Application Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,High,2022-06-23,Active
+AST-00151,mail-server-0151,Mail Server,SVC-EMAIL,Corporate Email,Staging,Athens DC2,T12,Low,2021-12-29,Active
+AST-00152,load-balancer-0152,Load Balancer,SVC-WEB,Public Website,Staging,Athens DC1,T11,Medium,2025-04-02,Active
+AST-00153,etl-server-0153,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Medium,2018-04-22,Active
+AST-00154,firewall-0154,Firewall,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,Critical,2018-11-02,Active
+AST-00155,laptop-0155,Laptop,SVC-WKS,End User Devices,Staging,Athens DC2,T13,Medium,2025-09-07,Active
+AST-00156,api-gateway-0156,API Gateway,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,Critical,2021-08-31,Active
+AST-00157,etl-server-0157,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,High,2018-09-03,Active
+AST-00158,identity-server-0158,Identity Server,SVC-SSO,Identity / SSO,Staging,Azure Germany WC,T07,Low,2019-12-23,Active
+AST-00159,load-balancer-0159,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,Critical,2025-08-31,Active
+AST-00160,database-server-0160,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Critical,2022-12-31,Active
+AST-00161,directory-server-0161,Directory Server,SVC-SSO,Identity / SSO,Staging,Thessaloniki DC,T07,Low,2021-04-10,Active
+AST-00162,application-server-0162,Application Server,SVC-ERP,ERP,Staging,Azure Germany WC,T09,Medium,2022-11-21,Active
+AST-00163,desktop-0163,Desktop,SVC-WKS,End User Devices,Production,Azure West Europe,T13,Critical,2018-01-26,Active
+AST-00164,firewall-0164,Firewall,SVC-NET,Core Network,Production,Azure Germany WC,T03,Medium,2022-03-24,Active
+AST-00165,web-server-0165,Web Server,SVC-WEB,Public Website,Production,Athens DC2,T11,Medium,2019-08-14,Active
+AST-00166,firewall-0166,Firewall,SVC-NET,Core Network,Production,Athens DC1,T03,Medium,2023-07-02,Active
+AST-00167,virtual-machine-0167,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Critical,2024-03-25,Active
+AST-00168,load-balancer-0168,Load Balancer,SVC-WEB,Public Website,Staging,Athens DC2,T11,Low,2019-02-15,Active
+AST-00169,database-server-0169,Database Server,SVC-PAY,Payments API,Development,Thessaloniki DC,T11,Low,2020-03-09,Active
+AST-00170,file-server-0170,File Server,SVC-FILE,File Storage,Production,Athens DC1,T04,Critical,2018-08-22,Active
+AST-00171,firewall-0171,Firewall,SVC-VPN,Remote Access VPN,Development,Thessaloniki DC,T03,Low,2024-09-22,Active
+AST-00172,web-server-0172,Web Server,SVC-WEB,Public Website,Staging,Thessaloniki DC,T11,Medium,2022-12-22,Active
+AST-00173,router-0173,Router,SVC-NET,Core Network,Production,Athens DC2,T03,Critical,2018-03-19,Active
+AST-00174,etl-server-0174,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC1,T14,Medium,2025-01-03,Active
+AST-00175,desktop-0175,Desktop,SVC-WKS,End User Devices,Staging,Athens DC1,T99,Low,2018-05-21,Retired
+AST-00176,load-balancer-0176,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,High,2025-07-19,Active
+AST-00177,directory-server-0177,Directory Server,SVC-SSO,Identity / SSO,Production,Azure Germany WC,T07,Critical,2022-12-30,Active
+AST-00178,database-server-0178,Database Server,SVC-CRM,CRM,Production,Azure West Europe,T10,Medium,2021-06-21,Retired
+AST-00179,web-server-0179,Web Server,SVC-WEB,Public Website,Production,Athens DC2,T11,Critical,2021-10-13,Retired
+AST-00180,log-server-0180,Log Server,SVC-SIEM,Security Monitoring,Production,Thessaloniki DC,T08,Medium,2025-09-02,Maintenance
+AST-00181,api-gateway-0181,API Gateway,SVC-PAY,Payments API,Staging,Thessaloniki DC,T11,Low,2019-01-15,Retired
+AST-00182,log-server-0182,Log Server,SVC-SIEM,Security Monitoring,Production,Athens DC2,T08,Medium,2023-06-10,Active
+AST-00183,mail-server-0183,Mail Server,,Corporate Email,Production,Athens DC2,T12,High,2024-09-11,Active
+AST-00184,application-server-0184,Application Server,SVC-ERP,ERP,Production,Athens DC2,T09,Critical,2024-08-02,Active
+AST-00185,web-server-0185,Web Server,SVC-HR,HR Portal,Production,Athens DC2,T09,High,2022-08-06,Active
+AST-00186,application-server-0186,Application Server,SVC-CRM,CRM,Production,Athens DC2,T10,High,2021-01-18,Active
+AST-00187,firewall-0187,Firewall,SVC-VPN,Remote Access VPN,Production,Athens DC2,T03,Critical,2018-06-12,Active
+AST-00188,identity-server-0188,Identity Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Critical,2024-08-14,Active
+AST-00189,web-server-0189,Web Server,SVC-HR,HR Portal,Staging,Azure Germany WC,T09,Low,2023-03-27,Active
+AST-00190,virtual-machine-0190,Virtual Machine,SVC-CLOUD,Cloud Hosting,Staging,Athens DC1,T06,Low,2022-01-28,Active
+AST-00191,identity-server-0191,Identity Server,SVC-SSO,Identity / SSO,Staging,Azure West Europe,T07,Low,2025-08-25,Active
+AST-00192,web-server-0192,Web Server,SVC-HR,HR Portal,Production,Athens DC2,T09,Critical,2023-04-24,Active
+AST-00193,etl-server-0193,ETL Server,SVC-DWH,Data Warehouse,Staging,Azure Germany WC,T14,Medium,2021-11-10,Active
+AST-00194,identity-server-0194,Identity Server,SVC-SSO,Identity / SSO,Production,Azure Germany WC,T07,Medium,2025-05-12,Active
+AST-00195,storage-array-0195,Storage Array,SVC-FILE,File Storage,Staging,Thessaloniki DC,T04,Medium,2021-05-23,Active
+AST-00196,database-server-0196,Database Server,SVC-ERP,ERP,Staging,Thessaloniki DC,T09,Medium,2021-03-08,Retired
+AST-00197,router-0197,Router,SVC-NET,Core Network,Production,Athens DC1,T03,High,2018-10-17,Active
+AST-00198,printer-0198,Printer,SVC-WKS,End User Devices,Production,Athens DC2,T13,Medium,2018-07-06,Active
+AST-00199,etl-server-0199,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Critical,2025-06-07,Active
+AST-00200,virtual-machine-0200,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Thessaloniki DC,T06,Medium,2020-08-28,Active
+AST-00201,web-server-0201,Web Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,High,2025-03-17,Active
+AST-00202,log-server-0202,Log Server,SVC-SIEM,Security Monitoring,Production,Thessaloniki DC,T08,Medium,2019-12-04,Active
+AST-00203,siem-collector-0203,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Athens DC1,T08,High,2020-04-29,Active
+AST-00204,load-balancer-0204,Load Balancer,,Public Website,Production,Athens DC1,T11,High,2025-05-26,Active
+AST-00205,router-0205,Router,SVC-NET,Core Network,Production,Athens DC2,T03,Medium,2023-05-22,Maintenance
+AST-00206,application-server-0206,Application Server,SVC-ERP,ERP,Staging,Azure West Europe,T09,Medium,2020-11-25,Active
+AST-00207,load-balancer-0207,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,High,2019-05-05,Active
+AST-00208,mail-server-0208,Mail Server,SVC-EMAIL,Corporate Email,Production,Azure West Europe,T12,Medium,2021-08-10,Active
+AST-00209,file-server-0209,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,Medium,2018-12-20,Active
+AST-00210,database-server-0210,Database Server,SVC-ERP,ERP,Staging,Azure Germany WC,T09,Medium,2018-05-22,Active
+AST-00211,web-server-0211,Web Server,SVC-HR,HR Portal,Production,Athens DC2,T09,Critical,2019-10-19,Active
+AST-00212,virtual-machine-0212,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Thessaloniki DC,T06,High,2018-01-25,Active
+AST-00213,identity-server-0213,Identity Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Medium,2023-12-27,Active
+AST-00214,etl-server-0214,ETL Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Medium,2018-05-12,Active
+AST-00215,storage-array-0215,Storage Array,SVC-FILE,File Storage,Production,Azure Germany WC,T04,Critical,2022-11-17,Active
+AST-00216,router-0216,Router,SVC-NET,Core Network,Production,Athens DC1,T03,Critical,2018-03-06,Maintenance
+AST-00217,database-server-0217,Database Server,SVC-CRM,CRM,Production,Athens DC1,T10,Critical,2025-03-08,Active
+AST-00218,directory-server-0218,Directory Server,SVC-SSO,Identity / SSO,Development,Athens DC1,T07,Low,2025-05-28,Active
+AST-00219,api-gateway-0219,API Gateway,SVC-PAY,Payments API,Production,Athens DC2,T11,High,2022-05-06,Active
+AST-00220,database-server-0220,Database Server,SVC-DWH,Data Warehouse,Production,Thessaloniki DC,T14,Medium,2024-12-19,Active
+AST-00221,application-server-0221,Application Server,SVC-CRM,CRM,Production,Athens DC2,T10,Critical,2019-09-05,Active
+AST-00222,application-server-0222,Application Server,SVC-CRM,CRM,Production,Azure West Europe,T10,Critical,2024-06-01,Active
+AST-00223,application-server-0223,Application Server,SVC-HR,HR Portal,Production,Thessaloniki DC,T09,High,2021-09-28,Active
+AST-00224,file-server-0224,File Server,SVC-FILE,File Storage,Production,Azure Germany WC,T04,High,2020-12-29,Active
+AST-00225,load-balancer-0225,Load Balancer,SVC-WEB,Public Website,Staging,Athens DC1,T11,Low,2021-02-19,Active
+AST-00226,application-server-0226,Application Server,SVC-ERP,ERP,Development,Azure West Europe,T09,Low,2022-12-09,Active
+AST-00227,kubernetes-node-0227,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Azure Germany WC,T06,Low,2020-09-25,Active
+AST-00228,database-server-0228,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,High,2024-11-24,Active
+AST-00229,database-server-0229,Database Server,SVC-PAY,Payments API,Production,Azure Germany WC,T11,Medium,2019-06-21,Active
+AST-00230,desktop-0230,Desktop,SVC-WKS,End User Devices,Staging,Azure Germany WC,T13,Low,2021-02-04,Active
+AST-00231,load-balancer-0231,Load Balancer,SVC-WEB,Public Website,Staging,Thessaloniki DC,T11,Low,2021-15-01,Active
+AST-00232,api-gateway-0232,API Gateway,SVC-PAY,Payments API,Production,Athens DC1,T11,Medium,2023-10-09,Active
+AST-00233,web-server-0233,Web Server,SVC-WEB,Public Website,Production,Athens DC1,T11,Medium,2023-08-24,Active
+AST-00234,application-server-0234,Application Server,SVC-PAY,Payments API,Staging,Athens DC2,T11,Low,2020-08-19,Active
+AST-00235,router-0235,Router,SVC-NET,Core Network,Production,Azure Germany WC,T03,High,2023-07-01,Active
+AST-00236,etl-server-0236,ETL Server,SVC-DWH,Data Warehouse,Production,Thessaloniki DC,T14,Critical,2019-07-15,Retired
+AST-00237,application-server-0237,Application Server,SVC-PAY,Payments API,Production,Athens DC2,T11,High,2019-04-27,Active
+AST-00238,siem-collector-0238,SIEM Collector,SVC-SIEM,Security Monitoring,Development,Azure Germany WC,T08,Low,2023-08-19,Active
+AST-00239,kubernetes-node-0239,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Athens DC2,T06,Low,2019-07-16,Active
+AST-00240,kubernetes-node-0240,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Athens DC1,T06,Medium,2021-02-05,Active
+AST-00241,firewall-0241,Firewall,SVC-VPN,Remote Access VPN,Production,Azure West Europe,T03,High,2022-07-18,Active
+AST-00242,virtual-machine-0242,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Thessaloniki DC,T06,Medium,2022-11-08,Maintenance
+AST-00243,file-server-0243,File Server,SVC-FILE,File Storage,Staging,Azure Germany WC,T04,Medium,2019-05-19,Active
+AST-00244,kubernetes-node-0244,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Athens DC1,T06,Medium,2022-02-02,Active
+AST-00245,database-server-0245,Database Server,SVC-DWH,Data Warehouse,Development,Athens DC1,T14,Low,2018-09-18,Active
+AST-00246,load-balancer-0246,Load Balancer,SVC-WEB,Public Website,Development,Athens DC2,T11,Low,2018-10-12,Retired
+AST-00247,firewall-0247,Firewall,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,Critical,2018-06-15,Active
+AST-00248,api-gateway-0248,API Gateway,SVC-PAY,Payments API,Staging,Athens DC1,T11,Medium,2019-11-29,Active
+AST-00249,database-server-0249,Database Server,SVC-ERP,ERP,Production,Athens DC2,T09,High,2020-06-10,Active
+AST-00250,storage-array-0250,Storage Array,SVC-FILE,File Storage,Staging,Azure West Europe,T04,Low,2025-09-15,Active
+AST-00251,web-server-0251,Web Server,SVC-WEB,Public Website,Production,Azure Germany WC,T11,Medium,2023-03-07,Active
+AST-00252,database-server-0252,Database Server,SVC-ERP,ERP,Production,Thessaloniki DC,T09,crit,2018-05-29,Active
+AST-00253,firewall-0253,Firewall,SVC-NET,Core Network,Staging,Athens DC1,T03,Low,2025-02-12,Active
+AST-00254,web-server-0254,Web Server,SVC-HR,HR Portal,Development,Azure Germany WC,T09,Low,2024-02-11,Active
+AST-00255,identity-server-0255,Identity Server,SVC-SSO,Identity / SSO,Production,Athens DC2,T07,Medium,2021-07-18,Active
+AST-00256,core-switch-0256,Core Switch,SVC-NET,Core Network,Development,Thessaloniki DC,T03,Low,2022-06-23,Active
+AST-00257,kubernetes-node-0257,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Azure West Europe,T06,Low,2023-05-29,Active
+AST-00258,application-server-0258,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,High,2020-12-07,Active
+AST-00259,firewall-0259,Firewall,SVC-NET,Core Network,Production,Azure Germany WC,T03,Medium,2024-06-08,Active
+AST-00260,mail-gateway-0260,Mail Gateway,SVC-EMAIL,Corporate Email,Development,Thessaloniki DC,T12,Low,2025-01-23,Active
+AST-00261,file-server-0261,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,High,2024-02-03,Active
+AST-00262,storage-array-0262,Storage Array,SVC-FILE,File Storage,Production,Athens DC2,T04,High,2024-09-23,Active
+AST-00263,mail-gateway-0263,Mail Gateway,SVC-EMAIL,Corporate Email,Production,Azure Germany WC,T12,Critical,2024-12-08,Active
+AST-00264,web-server-0264,Web Server,SVC-WEB,Public Website,Production,Thessaloniki DC,T11,Critical,2025-05-02,Active
+AST-00265,log-server-0265,Log Server,SVC-SIEM,Security Monitoring,Production,Athens DC1,T08,Critical,2021-09-19,Active
+AST-00266,desktop-0266,Desktop,SVC-WKS,End User Devices,Staging,Thessaloniki DC,T13,Low,2022-03-22,Active
+AST-00267,database-server-0267,Database Server,SVC-PAY,Payments API,Production,Athens DC1,T11,Medium,2021-08-11,Active
+AST-00268,web-server-0268,Web Server,SVC-HR,HR Portal,Development,Thessaloniki DC,T09,Low,2018-11-15,Active
+AST-00269,router-0269,Router,SVC-NET,Core Network,Production,Azure West Europe,T03,Medium,2024-02-08,Active
+AST-00270,desktop-0270,Desktop,SVC-WKS,End User Devices,Production,Azure West Europe,T13,High,2024-03-08,Active
+AST-00271,database-server-0271,Database Server,SVC-PAY,Payments API,Staging,Thessaloniki DC,T11,Low,2018-08-22,Active
+AST-00272,directory-server-0272,Directory Server,SVC-SSO,Identity / SSO,Development,Athens DC2,T07,Low,2019-03-20,Active
+AST-00273,router-0273,Router,SVC-NET,Core Network,Production,Athens DC2,T03,High,2020-01-04,Active
+AST-00274,application-server-0274,Application Server,SVC-PAY,Payments API,Staging,Azure Germany WC,T11,Low,2023-02-23,Active
+AST-00275,file-server-0275,File Server,SVC-FILE,File Storage,Production,Azure West Europe,T04,High,2022-11-19,Active
+AST-00276,application-server-0276,Application Server,SVC-PAY,Payments API,Production,Thessaloniki DC,T11,High,2018-12-19,Active
+AST-00277,database-server-0277,Database Server,SVC-CRM,CRM,Development,Azure West Europe,T10,Low,2020-03-24,Active
+AST-00278,desktop-0278,Desktop,SVC-WKS,End User Devices,Production,Azure Germany WC,T13,Critical,2023-11-27,Active
+AST-00279,storage-array-0279,Storage Array,SVC-FILE,File Storage,Production,Athens DC2,T04,High,2021-11-05,Active
+AST-00280,desktop-0280,Desktop,SVC-WKS,End User Devices,Production,Thessaloniki DC,T13,Medium,2020-12-15,Active
+AST-00281,etl-server-0281,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,Medium,2024-01-14,Retired
+AST-00282,core-switch-0282,Core Switch,SVC-NET,Core Network,Production,Azure Germany WC,T03,High,2019-01-13,Maintenance
+AST-00283,kubernetes-node-0283,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure West Europe,T06,High,2021-01-26,Active
+AST-00284,application-server-0284,Application Server,SVC-PAY,Payments API,Development,Athens DC2,T11,Low,2018-07-24,Active
+AST-00285,printer-0285,Printer,SVC-WKS,End User Devices,Staging,Azure Germany WC,T13,Medium,2024-07-17,Active
+AST-00286,web-server-0286,Web Server,SVC-HR,HR Portal,Production,Thessaloniki DC,T09,Medium,2018-08-19,Active
+AST-00287,firewall-0287,Firewall,SVC-NET,Core Network,Production,Athens DC2,T03,Medium,2023-06-11,Active
+AST-00288,kubernetes-node-0288,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Azure Germany WC,T06,Low,2025-01-27,Active
+AST-00289,database-server-0289,Database Server,SVC-CRM,CRM,Production,Athens DC2,T10,Critical,2025-12-14,Active
+AST-00290,database-server-0290,Database Server,SVC-PAY,Payments API,Production,Athens DC1,T11,Critical,2019-09-02,Active
+AST-00291,etl-server-0291,ETL Server,SVC-DWH,Data Warehouse,Production,Thessaloniki DC,T14,Medium,2022-07-16,Active
+AST-00292,core-switch-0292,Core Switch,SVC-NET,Core Network,Production,Athens DC2,T03,Medium,2023-04-25,Active
+AST-00293,application-server-0293,Application Server,SVC-HR,HR Portal,Production,Athens DC1,T09,High,2018-05-22,Retired
+AST-00294,virtual-machine-0294,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Critical,2023-04-05,Active
+AST-00295,file-server-0295,File Server,SVC-FILE,File Storage,Production,Azure West Europe,T04,High,2024-11-05,Active
+AST-00296,directory-server-0296,Directory Server,SVC-SSO,Identity / SSO,Staging,Athens DC1,T07,Low,2019-05-07,Active
+AST-00297,file-server-0297,File Server,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,Medium,2019-03-23,Active
+AST-00298,desktop-0298,Desktop,SVC-WKS,End User Devices,Production,Azure West Europe,T13,High,2024-06-21,Active
+AST-00299,database-server-0299,Database Server,SVC-DWH,Data Warehouse,Production,Athens DC2,T14,Critical,2019-01-16,Active
+AST-00300,vpn-appliance-0300,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,Critical,2021-04-08,Active
+AST-00301,identity-server-0301,Identity Server,SVC-SSO,Identity / SSO,Production,Thessaloniki DC,T07,Medium,2024-02-19,Active
+AST-00302,kubernetes-node-0302,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Azure Germany WC,T06,Medium,2022-03-30,Active
+AST-00303,storage-array-0303,Storage Array,SVC-FILE,File Storage,Production,Azure West Europe,T04,Medium,2021-11-21,Maintenance
+AST-00304,firewall-0304,Firewall,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,Critical,2022-03-18,Active
+AST-00305,log-server-0305,Log Server,SVC-SIEM,Security Monitoring,Production,Azure Germany WC,T08,Med.,2025-03-17,Active
+AST-00306,database-server-0306,Database Server,SVC-CRM,CRM,Production,Azure West Europe,T10,Critical,2018-05-21,Active
+AST-00307,web-server-0307,Web Server,SVC-HR,HR Portal,Production,Azure Germany WC,T09,Critical,2018-08-17,Active
+AST-00308,file-server-0308,File Server,SVC-FILE,File Storage,Production,Athens DC2,T04,High,2021-05-08,Active
+AST-00309,database-server-0309,Database Server,SVC-PAY,Payments API,Production,Athens DC2,T11,High,2023-02-15,Active
+AST-00310,database-server-0310,Database Server,SVC-DWH,Data Warehouse,Production,Athens DC1,T14,High,31/02/2021,Active
+AST-00311,file-server-0311,File Server,SVC-FILE,File Storage,Production,Azure Germany WC,T04,Medium,2019-03-11,Active
+AST-00312,application-server-0312,Application Server,SVC-HR,HR Portal,Production,Azure West Europe,T09,Medium,2024-04-15,Active
+AST-00313,application-server-0313,Application Server,SVC-HR,HR Portal,Development,Azure Germany WC,T09,Low,2024-01-11,Active
+AST-00314,storage-array-0314,Storage Array,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,Medium,2018-12-07,Maintenance
+AST-00315,application-server-0315,Application Server,,HR Portal,Production,Azure Germany WC,T09,Critical,2020-04-04,Maintenance
+AST-00316,kubernetes-node-0316,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Critical,2019-06-14,Active
+AST-00317,printer-0317,Printer,SVC-WKS,End User Devices,Staging,Athens DC2,T13,Low,2018-04-09,Active
+AST-00318,laptop-0318,Laptop,SVC-WKS,End User Devices,Production,Athens DC1,T13,Critical,2020-09-01,Active
+AST-00319,identity-server-0319,Identity Server,SVC-SSO,Identity / SSO,Staging,Azure Germany WC,T07,Medium,2025-06-04,Active
+AST-00320,laptop-0320,Laptop,SVC-WKS,End User Devices,Production,Azure Germany WC,T13,High,2022-10-09,Active
+AST-00321,router-0321,Router,SVC-NET,Core Network,Development,Azure West Europe,T03,Low,2019-06-23,Active
+AST-00322,etl-server-0322,ETL Server,SVC-DWH,Data Warehouse,Development,Thessaloniki DC,T14,Low,2023-03-11,Active
+AST-00323,firewall-0323,Firewall,SVC-VPN,Remote Access VPN,Development,Thessaloniki DC,T03,Low,2020-07-13,Active
+AST-00324,laptop-0324,Laptop,SVC-WKS,End User Devices,Staging,Thessaloniki DC,T13,Medium,2020-12-19,Active
+AST-00325,virtual-machine-0325,Virtual Machine,,Cloud Hosting,Production,Athens DC1,T06,Medium,2023-10-04,Active
+AST-00326,directory-server-0326,Directory Server,SVC-SSO,Identity / SSO,Production,Thessaloniki DC,T07,High,2020-06-12,Retired
+AST-00327,database-server-0327,Database Server,SVC-ERP,ERP,Staging,Thessaloniki DC,T09,Medium,2019-10-27,Active
+AST-00328,etl-server-0328,ETL Server,SVC-DWH,Data Warehouse,Development,Thessaloniki DC,T14,Low,2018-12-06,Active
+AST-00329,web-server-0329,Web Server,SVC-HR,HR Portal,Production,Athens DC1,T09,Medium,2025-09-13,Active
+AST-00330,core-switch-0330,Core Switch,SVC-NET,Core Network,Production,Athens DC1,T03,Critical,2020-10-23,Active
+AST-00331,application-server-0331,Application Server,SVC-ERP,ERP,Production,Azure Germany WC,T09,High,2021-06-18,Active
+AST-00332,file-server-0332,File Server,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,Critical,2020-06-05,Active
+AST-00333,kubernetes-node-0333,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Medium,2024-02-25,Active
+AST-00334,mail-server-0334,Mail Server,SVC-EMAIL,Corporate Email,Staging,Athens DC2,T12,Low,2025-02-10,Active
+AST-00335,storage-array-0335,Storage Array,SVC-FILE,File Storage,Production,Athens DC1,T04,High,2020-07-16,Active
+AST-00336,database-server-0336,Database Server,SVC-ERP,ERP,Production,Azure West Europe,T09,Medium,2022-08-15,Active
+AST-00337,database-server-0337,Database Server,SVC-CRM,CRM,Production,Athens DC2,T10,High,2020-10-24,Active
+AST-00338,file-server-0338,File Server,SVC-FILE,File Storage,Production,Athens DC1,T04,Medium,2020-11-13,Active
+AST-00339,web-server-0339,Web Server,SVC-HR,HR Portal,Production,Azure Germany WC,T09,Medium,2025-08-19,Active
+AST-00340,directory-server-0340,Directory Server,SVC-SSO,Identity / SSO,Production,Azure West Europe,T07,Medium,2018-10-24,Active
+AST-00341,database-server-0341,Database Server,SVC-CRM,CRM,Production,Athens DC2,T10,High,2020-03-21,Active
+AST-00342,file-server-0342,File Server,SVC-FILE,File Storage,Production,Thessaloniki DC,T04,Medium,2024-02-24,Active
+AST-00343,load-balancer-0343,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,Medium,2019-01-03,Active
+AST-00344,database-server-0344,Database Server,SVC-CRM,CRM,Development,Thessaloniki DC,T10,Low,2023-06-08,Active
+AST-00345,load-balancer-0345,Load Balancer,SVC-WEB,Public Website,Production,Athens DC2,T11,High,2022-01-25,Active
+AST-00346,printer-0346,Printer,SVC-WKS,End User Devices,Production,Azure West Europe,T13,Medium,2022-09-03,Active
+AST-00347,kubernetes-node-0347,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,High,2022-06-21,Active
+AST-00348,desktop-0348,Desktop,SVC-WKS,End User Devices,Production,Azure Germany WC,T13,High,2018-07-11,Active
+AST-00349,database-server-0349,Database Server,SVC-DWH,Data Warehouse,Development,Athens DC2,T14,Low,2020-10-16,Active
+AST-00350,storage-array-0350,Storage Array,SVC-FILE,File Storage,Production,Azure Germany WC,T04,Critical,2018-10-10,Active
+AST-00351,storage-array-0351,Storage Array,SVC-FILE,File Storage,Staging,Athens DC2,T04,Medium,2021-11-20,Active
+AST-00352,etl-server-0352,ETL Server,SVC-DWH,Data Warehouse,Production,Athens DC1,T14,Critical,2020-03-01,Active
+AST-00353,laptop-0353,Laptop,SVC-WKS,End User Devices,Production,Athens DC1,T13,Critical,2020-12-06,Active
+AST-00354,database-server-0354,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,High,2020-06-10,Active
+AST-00355,kubernetes-node-0355,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Staging,Thessaloniki DC,T06,Medium,2021-10-25,Active
+AST-00356,directory-server-0356,Directory Server,SVC-SSO,Identity / SSO,Production,Azure Germany WC,T07,High,2023-07-24,Active
+AST-00357,application-server-0357,Application Server,SVC-ERP,ERP,Development,Azure West Europe,T09,Low,2024-03-11,Maintenance
+AST-00358,siem-collector-0358,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Thessaloniki DC,T08,Critical,2023-09-24,Active
+AST-00359,directory-server-0359,Directory Server,SVC-SSO,Identity / SSO,Production,Athens DC2,T07,Critical,2020-12-11,Active
+AST-00360,vpn-appliance-0360,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Azure West Europe,T03,Medium,2024-07-08,Retired
+AST-00361,mail-server-0361,Mail Server,SVC-EMAIL,Corporate Email,Production,Athens DC1,T12,High,2023-01-20,Active
+AST-00362,web-server-0362,Web Server,SVC-HR,HR Portal,Production,Athens DC1,T09,Critical,2021-09-25,Active
+AST-00363,vpn-appliance-0363,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Azure Germany WC,T03,Critical,2019-12-29,Active
+AST-00364,printer-0364,Printer,SVC-WKS,End User Devices,Production,Azure Germany WC,T13,Medium,2024-07-28,Active
+AST-00365,api-gateway-0365,API Gateway,SVC-PAY,Payments API,Production,Athens DC2,T11,Medium,2022-06-08,Active
+AST-00366,load-balancer-0366,Load Balancer,SVC-WEB,Public Website,Production,Azure Germany WC,T11,Medium,2025-06-26,Active
+AST-00367,database-server-0367,Database Server,SVC-CRM,CRM,Development,Azure West Europe,T10,Low,2020-12-06,Retired
+AST-00368,router-0368,Router,SVC-NET,Core Network,Development,Thessaloniki DC,T03,Low,2021-06-22,Active
+AST-00369,identity-server-0369,Identity Server,SVC-SSO,Identity / SSO,Development,Azure West Europe,T07,Low,2025-03-23,Active
+AST-00370,siem-collector-0370,SIEM Collector,SVC-SIEM,Security Monitoring,Staging,Athens DC1,T08,Medium,2021-07-18,Active
+AST-00371,database-server-0371,Database Server,SVC-CRM,CRM,Production,Thessaloniki DC,T10,High,2020-10-23,Active
+AST-00372,file-server-0372,File Server,SVC-FILE,File Storage,Production,Azure Germany WC,T04,Medium,2025-01-20,Active
+AST-00373,load-balancer-0373,Load Balancer,SVC-WEB,Public Website,Production,Athens DC1,T11,High,2024-11-04,Active
+AST-00374,printer-0374,Printer,SVC-WKS,End User Devices,Development,Athens DC2,T13,Low,2019-10-11,Active
+AST-00375,application-server-0375,Application Server,SVC-PAY,Payments API,Production,Athens DC2,T11,High,2024-04-22,Active
+AST-00376,virtual-machine-0376,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,Medium,2019-09-28,Active
+AST-00377,firewall-0377,Firewall,SVC-VPN,Remote Access VPN,Production,Azure West Europe,T03,Critical,2022-07-16,Active
+AST-00378,load-balancer-0378,Load Balancer,SVC-WEB,Public Website,Production,Azure Germany WC,T11,Critical,2021-12-18,Active
+AST-00379,desktop-0379,Desktop,SVC-WKS,End User Devices,Production,Athens DC2,T13,Critical,2020-08-30,Active
+AST-00380,web-server-0380,Web Server,SVC-HR,HR Portal,Production,Athens DC1,T09,Critical,2022-09-16,Retired
+AST-00381,application-server-0381,Application Server,SVC-HR,HR Portal,Production,Athens DC2,T09,High,2020-10-21,Active
+AST-00382,web-server-0382,Web Server,SVC-HR,HR Portal,Staging,Azure Germany WC,T09,Medium,2020-03-10,Active
+AST-00383,file-server-0383,File Server,SVC-FILE,File Storage,Staging,Athens DC2,T04,Medium,2019-06-10,Active
+AST-00384,etl-server-0384,ETL Server,SVC-DWH,Data Warehouse,Production,Azure Germany WC,T14,Medium,2018-07-02,Active
+AST-00385,siem-collector-0385,SIEM Collector,SVC-SIEM,Security Monitoring,Production,Athens DC1,T08,Critical,2019-03-04,Active
+AST-00386,vpn-appliance-0386,VPN Appliance,SVC-VPN,Remote Access VPN,Production,Athens DC1,T03,High,2022-04-21,Active
+AST-00387,mail-gateway-0387,Mail Gateway,SVC-EMAIL,Corporate Email,Staging,Athens DC1,T12,Low,2022-07-12,Active
+AST-00388,mail-server-0388,Mail Server,SVC-EMAIL,Corporate Email,Development,Thessaloniki DC,T12,Low,2018-02-23,Active
+AST-00389,printer-0389,Printer,SVC-WKS,End User Devices,Staging,Athens DC2,T13,Low,2025-10-23,Active
+AST-00390,application-server-0390,Application Server,SVC-CRM,CRM,Production,Azure Germany WC,T10,Medium,2020-02-24,Active
+AST-00391,load-balancer-0391,Load Balancer,SVC-WEB,Public Website,Production,Thessaloniki DC,T11,Critical,2021-11-27,Active
+AST-00392,laptop-0392,Laptop,SVC-WKS,End User Devices,Production,Athens DC1,T13,Medium,2025-04-20,Active
+AST-00393,mail-server-0393,Mail Server,SVC-EMAIL,Corporate Email,Staging,Azure West Europe,T12,Medium,2022-09-14,Active
+AST-00394,core-switch-0394,Core Switch,SVC-NET,Core Network,Production,Athens DC1,T03,Critical,,Active
+AST-00395,virtual-machine-0395,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Azure Germany WC,T06,High,2019-12-15,Active
+AST-00396,log-server-0396,Log Server,SVC-SIEM,Security Monitoring,Production,Athens DC1,T08,High,2023-10-28,Retired
+AST-00397,database-server-0397,Database Server,SVC-DWH,Data Warehouse,Production,Thessaloniki DC,T14,High,unknown,Active
+AST-00398,virtual-machine-0398,Virtual Machine,SVC-CLOUD,Cloud Hosting,Production,Thessaloniki DC,T06,High,2022-10-19,Active
+AST-00399,log-server-0399,Log Server,SVC-SIEM,Security Monitoring,Development,Thessaloniki DC,T08,Low,2024-06-05,Active
+AST-00400,kubernetes-node-0400,Kubernetes Node,SVC-CLOUD,Cloud Hosting,Development,Thessaloniki DC,T06,Low,2018-10-31,Active
+AST-00016,database-server-0016,Database Server,SVC-DWH,Data Warehouse,Production,Azure West Europe,T14,Critical,2024-07-15,Active
+AST-00117,load-balancer-0117,Load Balancer,SVC-WEB,Public Website,Production,Azure West Europe,T11,Critical,2022-03-08,Active
+AST-00168,load-balancer-0168,Load Balancer,SVC-WEB,Public Website,Staging,Thessaloniki DC,T11,Low,2019-02-15,Active
