@@ -1,12 +1,3 @@
-"""Έλεγχος των access tokens του Entra ID (Azure AD).
-
-Εγκατάσταση:  pip install "pyjwt[crypto]"
-
-Χρειάζονται στο .env:
-    AZURE_TENANT_ID=<το tenant id σου>
-    AZURE_API_CLIENT_ID=<το client id του app registration "Team1 API">
-    AZURE_API_SCOPE=access_as_user        (προαιρετικό, αυτή είναι η προεπιλογή)
-"""
 import os
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -49,8 +40,8 @@ class _Settings:
 
 @lru_cache
 def _settings() -> _Settings:
-    tenant_id = os.getenv("AZURE_TENANT_ID", "").strip()
-    api_client_id = os.getenv("AZURE_API_CLIENT_ID", "").strip()
+    tenant_id = "b1732512-60e5-48fb-92e8-8d6902ac1349"
+    api_client_id = "fb46f4fe-fdab-471f-bd80-daf2e4b5a75e"
     if not tenant_id or not api_client_id:
         raise RuntimeError("Λείπουν τα AZURE_TENANT_ID ή AZURE_API_CLIENT_ID από το .env")
     return _Settings(
