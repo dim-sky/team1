@@ -1,14 +1,15 @@
-"""Run: pip install fastapi uvicorn python-dotenv deepagents sqlglot
+"""Run: pip install fastapi uvicorn python-dotenv deepagents sqlglot "pyjwt[crypto]"
         uvicorn myserver.server:server --reload   (από τον γονικό φάκελο)
 Then open http://127.0.0.1:8000/docs
 Place .env alongside this file or in a parent directory.
 """
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from myserver.auth import User, get_current_user
 from myserver.graph_helper import myGraph
 from myserver.deep_agent import ask_deep_agent
 from myserver.llm_helpers import route_question, answer_general
@@ -26,8 +27,7 @@ class AskQuestion(BaseModel):
 
 class AnswerResponse(BaseModel):
     answer: str
-    route: str | None = None   # "graph" / "agent" / "general": χρήσιμο για debugging στο frontend
-
+    route: str | None = None  
 
 server = FastAPI(title="Databricks Query API")
 
@@ -39,20 +39,38 @@ server.add_middleware(
     ],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"],          # περιλαμβάνει το Authorization header
 )
 
 
+# Ανοιχτό: χρειάζεται για ελέγχους υγείας (π.χ. Docker), χωρίς token
 @server.get("/health")
 def health():
     return {"status": "ok"}
 
 
+# Για να τεσταρουμε ότι λειτουργεί σωστά το JWT auth
+@server.get("/me")
+def me(user: User = Depends(get_current_user)):
+    return {
+        "status": "ok",
+        "oid": user.oid,
+        "name": user.name,
+        "username": user.username,
+        "scopes": user.claims.get("scp"),
+        "expires_at": user.claims.get("exp"),
+    }
+
+
+
 @server.post("/post", response_model=AnswerResponse)
-def ask_data(reqBody: AskQuestion):
+def ask_data(reqBody: AskQuestion, user: User = Depends(get_current_user)):
     """Data questions: the router decides graph (1 question) or agent (multiple)."""
     decision = route_question(reqBody.question)
-    print(f"[/post] route={decision.route} count={decision.question_count} reason={decision.reason}")
+    print(
+        f"[/post] user={user.username} route={decision.route} "
+        f"count={decision.question_count} reason={decision.reason}"
+    )
 
     try:
         if decision.route == "agent":
@@ -70,8 +88,9 @@ def ask_data(reqBody: AskQuestion):
 
 
 @server.post("/generalMessage", response_model=AnswerResponse)
-def ask_general(reqBody: AskQuestion):
+def ask_general(reqBody: AskQuestion, user: User = Depends(get_current_user)):
     """General questions: plain LLM, without access to the data."""
+    print(f"[/generalMessage] user={user.username}")
     try:
         answer = answer_general(reqBody.question)
     except Exception as e:
