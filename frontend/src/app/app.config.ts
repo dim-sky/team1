@@ -24,7 +24,8 @@ const msalInstance = new PublicClientApplication({
     redirectUri: window.location.origin,
     postLogoutRedirectUri: window.location.origin,
   },
-  cache: { cacheLocation: BrowserCacheLocation.LocalStorage },
+  // Κάθε καρτέλα έχει τη δική της κατάσταση σύνδεσης, ώστε να μην "συγκρούονται"
+  cache: { cacheLocation: BrowserCacheLocation.SessionStorage },
 });
 
 export const appConfig: ApplicationConfig = {
@@ -32,22 +33,23 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
 
-    // HTTP + interceptor που προσθέτει αυτόματα το Bearer token
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+
+    // Απενεργοποιημένο προς το παρόν: το backend δεν ελέγχει ακόμα tokens.
+    // Ενεργοποίησέ το όταν φτιάξεις backend με δικό του scope (API_SCOPE).
+    // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
 
     // Ρυθμίσεις MSAL
     { provide: MSAL_INSTANCE, useValue: msalInstance },
     {
       provide: MSAL_GUARD_CONFIG,
-      // Διόρθωση: LOGIN_SCOPES είναι ήδη array, όχι [LOGIN_SCOPES]
       useValue: { interactionType: InteractionType.Redirect, authRequest: { scopes: LOGIN_SCOPES } },
     },
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useValue: {
         interactionType: InteractionType.Redirect,
-        // Διόρθωση: LOGIN_SCOPES, όχι [LOGIN_SCOPES]. Αργότερα: [API_SCOPE]
+        // Αργότερα: [API_SCOPE]
         protectedResourceMap: new Map([[baseURL, LOGIN_SCOPES]]),
       },
     },

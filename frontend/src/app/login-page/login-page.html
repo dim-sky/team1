@@ -1,14 +1,8 @@
 <div class="login-page">
   <div class="login-card">
     <div class="brand">
-      <span class="brand-name">{{ brand }}</span>
-      <img
-        class="brand-logo"
-        src="/skillakia-logo.png"
-        alt="Skillakia logo: Got trained, hopefully will get hired"
-        width="200"
-        height="168"
-      />
+      <span class="brand-dot"></span>
+      {{ brand }}
     </div>
 
     <h1>Καλώς ήρθατε</h1>
@@ -17,12 +11,15 @@
     <button
       type="button"
       class="login-btn"
-      [disabled]="isRedirecting()"
+      [disabled]="isRedirecting() || !isReady()"
       (click)="login()"
     >
       @if (isRedirecting()) {
         <span class="spinner"></span>
         Ανακατεύθυνση...
+      } @else if (!isReady()) {
+        <span class="spinner"></span>
+        Προετοιμασία...
       } @else {
         <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
           <path

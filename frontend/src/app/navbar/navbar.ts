@@ -32,8 +32,14 @@ export class Navbar {
     this.menuOpen = false;
   }
 
-  logout(): void {
+    async logout(): Promise<void> {
     this.closeMenu();
-    this.msal.logoutRedirect();
+    const account = this.msal.instance.getActiveAccount() ?? undefined;
+ 
+    // Σβήνει τη σύνδεση μόνο από την εφαρμογή, χωρίς redirect στη Microsoft
+    await this.msal.instance.clearCache({ account });
+ 
+    // Καθαρή επαναφόρτωση: η εφαρμογή ξεκινά ως "αποσυνδεδεμένος"
+    window.location.assign('/');
   }
 }
