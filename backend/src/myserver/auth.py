@@ -22,7 +22,7 @@ class User:
     username: str | None          # συνήθως το email
     claims: dict = field(repr=False)
 
-
+#
 @dataclass(frozen=True)
 class _Settings:
     tenant_id: str
