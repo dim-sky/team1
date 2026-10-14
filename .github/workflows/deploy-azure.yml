@@ -1,0 +1,199 @@
+# Builds the backend and frontend images, pushes them to Azure Container Registry,
+# and deploys them as Azure Container Apps. Same steps as azure/deploy.ps1.
+#
+# Place this file at: .github/workflows/deploy-azure.yml
+#
+# Required repository SECRETS:
+#   AZURE_CLIENT_ID        App registration (client) ID used for OIDC login
+#   AZURE_TENANT_ID        Azure AD tenant ID
+#   AZURE_SUBSCRIPTION_ID  Subscription ID
+#   BACKEND_ENV            Full contents of backend/.env (KEY=value per line)
+#
+# Required repository VARIABLES:
+#   AZURE_RESOURCE_GROUP   e.g. rg-instructor-01
+#   AZURE_LOCATION         e.g. westeurope
+#   AZURE_ACR_NAME         e.g. team1acr12345 (globally unique, lowercase + digits)
+
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - "azure/**"
+      - ".github/workflows/deploy-azure.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # needed for OIDC login to Azure
+  contents: read
+
+# Never run two deployments at the same time; queue them instead
+concurrency:
+  group: deploy-azure
+  cancel-in-progress: false
+
+env:
+  RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+  LOCATION: ${{ vars.AZURE_LOCATION }}
+  ACR_NAME: ${{ vars.AZURE_ACR_NAME }}
+  ENVIRONMENT_NAME: team1-env
+  WORKSPACE_NAME: team1-logs
+  APP_PREFIX: team1
+  BICEP_DIR: azure
+  # Every commit gets its own tag, so Azure always starts a new revision
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  # ---------- 1. Registry, log workspace, Container Apps environment ----------
+  infrastructure:
+    name: Deploy infrastructure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy infrastructure.bicep
+        run: |
+          az deployment group create \
+            --resource-group "$RESOURCE_GROUP" \
+            --template-file "$BICEP_DIR/infrastructure.bicep" \
+            --parameters \
+              location="$LOCATION" \
+              acrName="$ACR_NAME" \
+              environmentName="$ENVIRONMENT_NAME" \
+              workspaceName="$WORKSPACE_NAME" \
+            --output none
+
+  # ---------- 2 + 3. Build and push both images (in parallel) ----------
+  build:
+    name: Build ${{ matrix.service }}
+    needs: infrastructure
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - service: backend
+            context: ./backend
+            image: team1-backend
+          - service: frontend
+            context: ./frontend
+            image: team1-frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to ACR
+        run: az acr login --name "$ACR_NAME"
+
+      - name: Get registry login server
+        id: acr
+        run: echo "server=$(az acr show --name "$ACR_NAME" --query loginServer --output tsv)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: |
+            ${{ steps.acr.outputs.server }}/${{ matrix.image }}:${{ env.IMAGE_TAG }}
+            ${{ steps.acr.outputs.server }}/${{ matrix.image }}:latest
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  # ---------- 4 + 5. Backend env -> parameters file, then deploy the apps ----------
+  deploy:
+    name: Deploy container apps
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build backend env parameters file
+        env:
+          BACKEND_ENV: ${{ secrets.BACKEND_ENV }}
+          PARAM_FILE: ${{ runner.temp }}/backend-env.json
+        run: |
+          python3 - <<'EOF'
+          import json, os, sys
+
+          raw = os.environ.get("BACKEND_ENV", "")
+          if not raw.strip():
+              sys.exit("::error::The BACKEND_ENV secret is empty or missing")
+
+          # Same parsing rules as deploy.ps1
+          backend_env = {}
+          for line in raw.splitlines():
+              line = line.strip()
+              if not line or line.startswith("#") or "=" not in line:
+                  continue
+              key, value = line.split("=", 1)
+              key = key.strip()
+              if key.startswith("export "):
+                  key = key[7:].strip()
+              value = value.strip().strip('"').strip("'")
+              if value:
+                  print(f"::add-mask::{value}")  # hide each value from the logs
+                  backend_env[key] = value
+
+          params = {
+              "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+              "contentVersion": "1.0.0.0",
+              "parameters": {"backendEnv": {"value": backend_env}},
+          }
+          with open(os.environ["PARAM_FILE"], "w", encoding="utf-8") as f:
+              json.dump(params, f)
+
+          print(f"Wrote {len(backend_env)} backend variables")
+          EOF
+
+      - name: Deploy apps.bicep
+        id: apps
+        env:
+          PARAM_FILE: ${{ runner.temp }}/backend-env.json
+        run: |
+          URL=$(az deployment group create \
+            --resource-group "$RESOURCE_GROUP" \
+            --template-file "$BICEP_DIR/apps.bicep" \
+            --parameters "@$PARAM_FILE" \
+            --parameters \
+              location="$LOCATION" \
+              acrName="$ACR_NAME" \
+              environmentName="$ENVIRONMENT_NAME" \
+              appPrefix="$APP_PREFIX" \
+              backendImage="team1-backend:$IMAGE_TAG" \
+              frontendImage="team1-frontend:$IMAGE_TAG" \
+            --query "properties.outputs.url.value" \
+            --output tsv)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "### Deployed :rocket:" >> "$GITHUB_STEP_SUMMARY"
+          echo "Frontend: $URL" >> "$GITHUB_STEP_SUMMARY"
+          echo "Image tag: \`$IMAGE_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove parameters file
+        if: always()
+        run: rm -f "${{ runner.temp }}/backend-env.json"
