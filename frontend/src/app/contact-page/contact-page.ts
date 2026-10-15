@@ -57,10 +57,12 @@ export class ContactPage {
       phone: '+30 694 628 0070',
     },
     {
-      // Placeholder: συμπλήρωσε όταν έχεις τα στοιχεία
-      name: 'Team Member',
-      description: 'Details coming soon.',
-    },
+      name: 'Dimitrios Skylakos',
+      description:'unemployed',
+      photo: '/team/dimitis.jpg',
+      email: 'dimskylakos@gmail.com',
+      phone: '+30 694 052 9218',
+    }
   ];
 
   // Φωτογραφίες που απέτυχαν να φορτώσουν (για να δείξουμε αρχικά)
